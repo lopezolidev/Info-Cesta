@@ -1,6 +1,6 @@
 # Riverbend Grocers
 This project is a comprehensive case study in database design and implementation for 'Riverbend Grocers', a fictional supermarket chain. The system manages both physical and online sales operations, handling customers, products, inventory, and promotions through advanced SQL programming, including stored procedures, functions, and triggers.
-# Gama Supermarket - Integrated Database System
+# Riverbend Grocers - Integrated Database System
 ## About
 This project is a PostgreSQL database developed for a fictional supermarket. The system architecture and requirements are based on a university project from the Databases course at the Universidad Central de Venezuela. This system is designed to handle both **online** and **physical** sale operations. 
 ## Key Features
