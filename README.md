@@ -1,8 +1,8 @@
-# DataGama
-This project is the development of an integrated  PostgreSQL database for Gama Supermarket. The system manages both physical and online sales operations, handling customers, products, inventory, and promotions through advanced SQL programming, including stored procedures, functions, and triggers.
+# Riverbend Grocers
+This project is a comprehensive case study in database design and implementation for 'Riverbend Grocers', a fictional supermarket chain. The system manages both physical and online sales operations, handling customers, products, inventory, and promotions through advanced SQL programming, including stored procedures, functions, and triggers.
 # Gama Supermarket - Integrated Database System
 ## About
-This project is a PostgreSQL database developed for Gama Supermarket. It serves as the final project for the Databases course at the School of Computer Science, Universidad Central de Venezuela. This system is designed to handle both **online** and **physical** sale operations.
+This project is a PostgreSQL database developed for a fictional supermarket. The system architecture and requirements are based on a university project from the Databases course at the Universidad Central de Venezuela. This system is designed to handle both **online** and **physical** sale operations. 
 ## Key Features
 - A comprehensive relational model with over 25+ tables managing inventory, sales, customers, products, etc.
 - Advanced analytical queries to generate complex business reports.
@@ -24,7 +24,7 @@ The project follows a script-based structure to ensure sequential execution:
 - **Language**: SQL, PL/pgSQL
 - **Tools**: Git, GitHub, PgAdmin and postgreSQL CLI
 ## Setup and Installation
-- `git clone git@github.com:lopezolidev/DataGama.git`
+- `git clone git@github.com:lopezolidev/RiverbendGrocers.git`
 - Setup PostgreSQL database and user (either through CLI or PgAdmin)
 - Configure the connection in a `.env` file (this file is ignored by Git).
 - Run the SQL scripts in the correct order (`01_schema.sql`, then `02_inserts.sql`, etc.) to create and populate the database.
