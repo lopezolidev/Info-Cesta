@@ -13,18 +13,18 @@ This project is a PostgreSQL database developed for Gama Supermarket. It serves 
 ==Database schema diagram==
 ## Project Structure 
 The project follows a script-based structure to ensure sequential execution: 
- ├── 01_schema.sql - *Database and table creation* 
- ├── 02_inserts.sql - *Data population* 
- ├── 03_queries.sql - *Analytical queries* 
- ├── 04_functions.sql - *Custom functions* 
- ├── 05_procedures.sql - *Stored procedures* 
- └── 06_triggers.sql - *Triggers*
+ 1. 01_schema.sql - *Database and table creation*
+ 2. 02_inserts.sql - *Data population*
+ 3. 03_queries.sql - *Analytical queries*
+ 4. 04_functions.sql - *Custom functions*
+ 5. 05_procedures.sql - *Stored procedures*
+ 6. 06_triggers.sql - *Triggers*
 ## Tech Stack
 - **Database**: PostgreSQL
 - **Language**: SQL, PL/pgSQL
 - **Tools**: Git, GitHub, PgAdmin and postgreSQL CLI
 ## Setup and Installation
-- `git clone [repo-url]`
+- `git clone git@github.com:lopezolidev/DataGama.git`
 - Setup PostgreSQL database and user (either through CLI or PgAdmin)
 - Configure the connection in a `.env` file (this file is ignored by Git).
 - Run the SQL scripts in the correct order (`01_schema.sql`, then `02_inserts.sql`, etc.) to create and populate the database.
