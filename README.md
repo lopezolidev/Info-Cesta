@@ -10,7 +10,16 @@ This project is a PostgreSQL database developed for a fictional supermarket. The
 - Automated data integrity and processes using **Triggers**, such as inventory updates upon sales and data validation for purchases.
 - Custom **Functions** for reusable and precise financial calculations within the database.
 ## Database Schema
-==Database schema diagram==
+### Snowflake visual
+![grocerlytics_diagram_snowflake](imgs/grocerlyticsDB_SnowflakeSVG.svg)
+### Compact
+![grocerlytics_diagram_compact](imgs/grocerlyticsDB_compactSVG.svg)
+### Left to Right
+![grocerlytics_diagram_compact](imgs/grocerlytics_LefttoRightSVG.svg)
+### PDF of each diagram
+[Snowflake visual](pdfs/grocerlyticsDB_Snowflake.pdf)
+[Compact visual](pdfs/grocerlyticsDB_compact.pdf)
+[Left to Right visual](pdfs/grocerlyticsDB_LefttoRight.pdf)
 ## Project Structure 
 The project follows a script-based structure to ensure sequential execution: 
  1. 01_schema.sql - *Database and table creation*

@@ -1,0 +1,256 @@
+// Use DBML to define your database structure
+// Docs: https://dbml.dbdiagram.io/docs
+
+Project datagama {
+  database_type: 'PostgreSQL'
+  Note: 'DB project to simulate a supermarket chain, robust structure of ER model. For educactional purpososes'
+}
+
+// Independent tables - Group 1
+// These are the most independent tables
+// Don't depend of any other, therefore these tables must be creted first. 
+// Inside this group order doesn't matter.
+Table Pais {
+  id integer [pk]
+  nombre varchar(100) [not null]
+}
+
+Table FormaPago {
+  id integer [pk]
+  nombre varchar(100) [not null]
+  descripcion varchar(100)
+}
+
+Table TipoEnvio {
+  id integer [pk]
+  nombreEnvio varchar(100) [not null]
+  tiempoEstimadoEntrega integer [note: 'CHECK BETWEEN 0 AND 23']
+  costoEnvio decimal(10,1) [note: 'CHECK >= 0'] 
+}
+
+Table Marca {
+  id integer [pk]
+  nombre varchar(100) [not null]
+  descripcion varchar(100)
+}
+
+Table Categoria {
+  id integer [pk]
+  nombre varchar(100) [not null]
+  descripcion varchar(100)
+}
+
+Table Cargo {
+  id integer [pk]
+  nombre varchar(100) [not null]
+  descripcion varchar(100)
+  salarioBasePorHora decimal(10,2) [note: 'CHECK >= 0'] 
+}
+
+// Main entities - Group 2
+// These tables depend on the catalog tables from first group. 
+// These are the pillars of our database
+Table Estado {
+  id integer [pk]
+  nombre varchar(100) [not null]
+  paisId integer [ref: > Pais.id]
+}
+
+Table Ciudad {
+  id integer [pk]
+  nombre varchar(100) [not null]
+  estadoId integer [ref: > Estado.id] 
+}
+
+Table Sucursal {
+  id integer [pk]
+  nombre varchar(100) [not null]
+  direccion varchar(100)
+  telefono varchar(14)
+  horaAbrir integer [note: 'CHECK BETWEEN 0 AND 23']
+  horaCerrar integer [note: 'CHECK BETWEEN 0 AND 23']
+  ciudadId integer [ref: > Ciudad.id]
+}
+
+Table Empleado {
+  id integer [pk]
+  CI integer [unique]
+  nombre varchar(100) [not null]
+  apellido varchar(100)
+  sexo char(1) [note: 'CHECK (sexo IN (M, F))']
+  direccionCorta varchar(100)
+  cargoId integer [ref: > Cargo.id]
+  empleadoSupervisorId integer [ref: > Empleado.id]
+  sucursalId integer [ref: > Sucursal.id]
+  fechaContrato date
+  bonoFijoMensual decimal(10,2) [note: 'CHECK >= 0']
+  horaInicio integer [note: 'CHECK BETWEEN 0 AND 23']
+  horaFin integer [note: 'CHECK BETWEEN 0 AND 23']
+  cantidadDiasTrabajoPorSemana integer [note: 'CHECK BETWEEN 1 AND 7']
+}
+
+Table Proveedor {
+  id integer [pk]
+  RIF varchar(15) [unique]
+  nombre varchar(100) [not null]
+  contacto varchar(100)
+  telefono varchar(14)
+  correo varchar(100) [unique]
+  ciudadId integer [ref: > Ciudad.id]
+}
+
+Table Producto {
+  id integer [pk]
+  nombre varchar(100) [not null]
+  codigoBarra varchar(20) [unique, not null]
+  descripcion varchar(100)
+  tipoPrecio varchar(9) [note: 'CHECK (tipoPrecio IN  (PorUnidad , PorPesoKg))']
+  precioPor decimal(10,2) [not null, note: 'CHECK (precioPor >= 0)']
+  esExentoIVA bool [not null]
+  categoriaId integer [ref: > Categoria.id]
+  marcaId integer [ref: > Marca.id]
+}
+
+Table Promo {
+  id integer [pk]
+  nombre varchar(100) [not null]
+  slogan varchar(100)
+  codigo varchar(10) [unique]
+  tipoDescuento varchar(10) [note: 'CHECK (tipoDescuento IN (Porcentaje, Fijo)']
+  valorDescuento decimal(10, 2) [note: 'CHECK (valorDescuento >= 0)']
+  fechaInicio date
+  fechaFin date
+  tipoPromocion varchar(6) [note: 'CHECK (tipoPromocion IN (Online, Física, Ambos))']
+}
+
+Table Cliente {
+  id integer [pk]
+  CI integer [unique, not null]
+  nombre varchar(100) [not null]
+  apellido varchar(100)
+  correo varchar(100) [unique, not null]
+  sexo char(1) [note: 'CHECK (sexo IN (M, F))']
+  fechaNacimiento date
+  fechaRegistro date
+}
+
+// Transaction and Relation Tables - Group 3
+// These are the tables that connect everything. 
+// Depend on the entities from second group and sometimes between them. 
+// They're the heart of our business logic.
+
+Table Inventario {
+  id integer [pk]
+  productoId integer [ref: - Producto.id]
+  cantidad integer [note: 'CHECK (cantidad >= 0)']
+}
+
+Table ClienteDireccion {
+  id integer [pk]
+  clienteId integer [ref: > Cliente.id]
+  tipoDireccion varchar(11) [note: 'CHECK (tipoDireccion IN (Facturación, Envío))']
+  dirLinea1 varchar(100) [not null]
+  ciudadId integer [ref: > Ciudad.id]  
+}
+
+Table Carrito {
+  clienteId integer [pk, ref: > Cliente.id]
+  productoId integer [pk, ref: > Producto.id]
+  fechaAgregado date [not null]
+  cantidad integer [note: 'CHECK (cantidad >= 0)']
+  precioPor decimal(10,2) [not null, note: 'CHECK (precioPor >= 0)']
+}
+
+Table HistorialClienteProducto {
+  clienteId integer [pk, ref: > Cliente.id]
+  productoId integer [pk, ref: > Producto.id]
+  fecha date [pk]
+  tipoAccion varchar(8) [not null, note: 'CHECK (tipoAccion IN (Búsqueda, Carrito, Compra))']
+} 
+
+Table ProveedorProducto {
+  id integer [pk]
+  proveedorId integer [ref: > Proveedor.id]
+  productoId integer [ref: > Producto.id]
+  fechaCompra date [not null]
+  precioPor decimal(10,2) [not null, note: 'CHECK (precioPor >= 0)']
+  cantidad integer [not null, note: 'CHECK (cantidad >= 0)']
+}
+
+Table ProductoRecomendadoParaProducto {
+  productoId integer [pk, ref: > Producto.id]
+  productoRecomendadoId integer [pk, ref: > Producto.id] 
+  mensaje varchar(100)
+} 
+
+Table ProductoRecomendadoParaCliente {
+  clienteId integer [pk, ref: > Cliente.id]
+  productoRecomendadoId integer [pk, ref: > Producto.id] 
+  fechaRecomendacion date [pk, not null] // we can recommend the same product to the same customer more than once
+  mensaje varchar(100) 
+}
+
+Table PromoEspecializada {
+  id integer [pk]
+  promoId integer [ref: > Promo.id]
+  productoId integer [ref: > Producto.id]
+  categoriaId integer [ref: > Categoria.id]
+  marcaId integer [ref: > Marca.id]
+}
+
+Table Factura {
+  id integer [pk]
+  fechaEmision date [not null]
+  clienteId integer [ref: > Cliente.id]
+  subTotal decimal(10,2) [not null, note: 'CHECK (subTotal >= 0)']
+  montoDescuentoTotal decimal(10,2) [not null, note: 'CHECK (montoDescuentoTotal >= 0)']
+  porcentajeIVA decimal(10,2) [not null, note: 'CHECK (porcentajeIVA >= 0)']
+  montoIVA decimal(10,2) [not null, note: 'CHECK (montoIVA >= 0)']
+  montoTotal decimal(10,2) [not null, note: 'CHECK (montoTotal >= 0)']
+}
+
+// Detail Tables and Final Associations - Group 4
+// These are the most dependendt tables. 
+// Usually regirster transaction details and cannot exist without them.
+
+Table Pago {
+  facturaId integer [pk, ref: - Factura.id] // a payment only has 1 bill and viceversa
+  nroTransaccion integer [not null, unique, note: 'CHECK (nroTransaccion >= 0)']
+  metodoPagoId integer [ref: > FormaPago.id]
+}
+
+Table VentaFisica {
+  facturaId integer [pk, ref: - Factura.id]
+  sucursalId integer [pk, ref: > Sucursal.id]
+  empleadoId integer [pk, ref: > Empleado.id]
+}
+
+Table FacturaDetalle {
+  id integer [pk]
+  facturaId integer [ref: > Factura.id]
+  productoId integer [ref: > Producto.id]
+  cantidad integer [not null, note: 'CHECK (cantidad >= 0)']
+  precioPor decimal(10,2) [not null, note: 'CHECK (precioPor >= 0)']
+}
+
+Table FacturaPromo {
+  facturaId integer [pk, ref: > Factura.id]
+  promoId integer [pk, ref: > Promo.id]
+}
+
+Table OrdenOnline {
+  id integer [pk]
+  clienteId integer [ref: > Cliente.id]
+  nroOrden integer [not null, unique]
+  fechaCreacion date [not null]
+  tipoEnvioId integer [ref: > TipoEnvio.id]
+  facturaId integer [ref: > Factura.id, null]
+}
+
+Table OrdenDetalle {
+  id integer [pk]
+  ordenId integer [ref: > OrdenOnline.id]
+  productoId integer [ref: > Producto.id]
+  cantidad integer [not null, note: 'CHECK (cantidad >= 0)']
+  precioPor decimal(10,2) [not null, note: 'CHECK (precioPor >= 0)']
+}
