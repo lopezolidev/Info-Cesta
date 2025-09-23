@@ -8,14 +8,14 @@ CREATE DATABASE infocesta ;
 */
 
 CREATE TABLE IF NOT EXISTS Pais (
-    id SERIAL ,
+    id INTEGER GENERATED ALWAYS AS IDENTITY ,
     nombre VARCHAR(100) NOT NULL,
 
     PRIMARY KEY (id) 
 ) ;
 
 CREATE TABLE IF NOT EXISTS FormaPago (
-    id SERIAL ,
+    id INTEGER GENERATED ALWAYS AS IDENTITY ,
     nombre VARCHAR(100) NOT NULL,
     descripcion VARCHAR(100),
 
@@ -23,7 +23,7 @@ CREATE TABLE IF NOT EXISTS FormaPago (
 ) ;
 
 CREATE TABLE IF NOT EXISTS TipoEnvio (
-    id SERIAL ,
+    id INTEGER GENERATED ALWAYS AS IDENTITY ,
     nombreEnvio VARCHAR(100) NOT NULL,
     tiempoEstimadoEntrega INTEGER CHECK (tiempoEstimadoEntrega BETWEEN 0 AND 23),
     costoEnvio DECIMAL(10, 1) CHECK (costoEnvio >= 0),
@@ -32,7 +32,7 @@ CREATE TABLE IF NOT EXISTS TipoEnvio (
 ) ;
 
 CREATE TABLE IF NOT EXISTS Marca (
-    id SERIAL ,
+    id INTEGER GENERATED ALWAYS AS IDENTITY ,
     nombre VARCHAR(100) NOT NULL ,
     descripcion VARCHAR(100),
 
@@ -40,7 +40,7 @@ CREATE TABLE IF NOT EXISTS Marca (
 ) ;
 
 CREATE TABLE IF NOT EXISTS Categoria (
-    id SERIAL ,
+    id INTEGER GENERATED ALWAYS AS IDENTITY ,
     nombre VARCHAR(100) NOT NULL,
     descripcion VARCHAR(100),
 
@@ -48,7 +48,7 @@ CREATE TABLE IF NOT EXISTS Categoria (
 ) ;
 
 CREATE TABLE IF NOT EXISTS Cargo (
-    id SERIAL ,
+    id INTEGER GENERATED ALWAYS AS IDENTITY ,
     nombre VARCHAR(100) NOT NULL,
     descripcion VARCHAR(100),
     salarioBasePorHora DECIMAL(10, 2) CHECK (salarioBasePorHora >= 0),
@@ -63,7 +63,7 @@ CREATE TABLE IF NOT EXISTS Cargo (
 */
 
 CREATE TABLE IF NOT EXISTS Estado (
-    id SERIAL ,
+    id INTEGER GENERATED ALWAYS AS IDENTITY ,
     nombre VARCHAR(100) NOT NULL,
     paisId INTEGER,
 
@@ -72,7 +72,7 @@ CREATE TABLE IF NOT EXISTS Estado (
 ) ;
 
 CREATE TABLE IF NOT EXISTS Ciudad (
-    id SERIAL ,
+    id INTEGER GENERATED ALWAYS AS IDENTITY ,
     nombre VARCHAR(100) NOT NULL,
     estadoId INTEGER,
 
@@ -81,7 +81,7 @@ CREATE TABLE IF NOT EXISTS Ciudad (
 ) ;
 
 CREATE TABLE IF NOT EXISTS Sucursal (
-    id SERIAL ,
+    id INTEGER GENERATED ALWAYS AS IDENTITY ,
     nombre VARCHAR(100) NOT NULL,
     direccion VARCHAR(100),
     telefono VARCHAR(14),
@@ -94,7 +94,7 @@ CREATE TABLE IF NOT EXISTS Sucursal (
 );
 
 CREATE TABLE IF NOT EXISTS Empleado (
-    id SERIAL ,
+    id INTEGER GENERATED ALWAYS AS IDENTITY ,
     CI INTEGER UNIQUE, 
     nombre VARCHAR(100) NOT NULL,
     apellido VARCHAR(100),
@@ -116,7 +116,7 @@ CREATE TABLE IF NOT EXISTS Empleado (
 );
 
 CREATE TABLE IF NOT EXISTS Proveedor (
-    id SERIAL ,
+    id INTEGER GENERATED ALWAYS AS IDENTITY ,
     RIF VARCHAR(15) UNIQUE,
     nombre VARCHAR(100) NOT NULL,
     contacto VARCHAR(100),
@@ -129,7 +129,7 @@ CREATE TABLE IF NOT EXISTS Proveedor (
 );
 
 CREATE TABLE IF NOT EXISTS Producto (
-    id SERIAL ,
+    id INTEGER GENERATED ALWAYS AS IDENTITY ,
     nombre VARCHAR(100) UNIQUE NOT NULL,
     codigoBarra VARCHAR(20) UNIQUE NOT NULL,
     descripcion VARCHAR(100),
@@ -145,7 +145,7 @@ CREATE TABLE IF NOT EXISTS Producto (
 );
 
 CREATE TABLE IF NOT EXISTS Promo (
-    id SERIAL ,
+    id INTEGER GENERATED ALWAYS AS IDENTITY ,
     nombre VARCHAR(100) NOT NULL,
     slogan VARCHAR(100),
     codigo VARCHAR(10) UNIQUE,
@@ -159,7 +159,7 @@ CREATE TABLE IF NOT EXISTS Promo (
 );
 
 CREATE TABLE IF NOT EXISTS Cliente(
-    id SERIAL ,
+    id INTEGER GENERATED ALWAYS AS IDENTITY ,
     CI INTEGER UNIQUE NOT NULL,
     nombre VARCHAR(100) NOT NULL,
     apellido VARCHAR(100),
@@ -179,7 +179,7 @@ CREATE TABLE IF NOT EXISTS Cliente(
 */
 
 CREATE TABLE IF NOT EXISTS Inventario (
-    id SERIAL ,
+    id INTEGER GENERATED ALWAYS AS IDENTITY ,
     productoId INTEGER,
     cantidad INTEGER CHECK (cantidad >= 0),
 
@@ -188,7 +188,7 @@ CREATE TABLE IF NOT EXISTS Inventario (
 );
 
 CREATE TABLE IF NOT EXISTS ClienteDireccion (
-    id SERIAL ,
+    id INTEGER GENERATED ALWAYS AS IDENTITY ,
     clienteId INTEGER,
     tipoDireccion VARCHAR(11) CHECK (tipoDireccion IN ('Facturación', 'Envío')),
     dirLinea1 VARCHAR(100) NOT NULL,
@@ -223,8 +223,9 @@ CREATE TABLE IF NOT EXISTS HistorialClienteProducto (
     CONSTRAINT fk_producto_id FOREIGN KEY (productoId) REFERENCES Producto(id)
 );
 
+
 CREATE TABLE IF NOT EXISTS ProveedorProducto (
-    id INTEGER ,
+    id INTEGER GENERATED ALWAYS AS IDENTITY ,
     proveedorId INTEGER,  
     productoId INTEGER ,
     fechaCompra TIMESTAMP NOT NULL,
@@ -257,8 +258,9 @@ CREATE TABLE IF NOT EXISTS ProductoRecomendadoParaCliente (
     CONSTRAINT fk_productoRecomendado_id FOREIGN KEY (productoRecomendadoId) REFERENCES Producto(id)
 );
 
+
 CREATE TABLE IF NOT EXISTS PromoEspecializada (
-    id SERIAL ,
+    id INTEGER GENERATED ALWAYS AS IDENTITY ,
     promoId INTEGER,
     productoid INTEGER ,
     categoriaId INTEGER ,  
@@ -272,7 +274,7 @@ CREATE TABLE IF NOT EXISTS PromoEspecializada (
 );
 
 CREATE TABLE IF NOT EXISTS Factura (
-    id INTEGER ,
+    id INTEGER GENERATED ALWAYS AS IDENTITY ,
     fechaEmision TIMESTAMP NOT NULL,
     clienteId INTEGER,
     subTotal DECIMAL(10, 2) NOT NULL CHECK (subTotal >= 0),
@@ -292,4 +294,77 @@ CREATE TABLE IF NOT EXISTS Factura (
     Usually register transaction details and cannot exist without them.
 */
 
+CREATE TABLE IF NOT EXISTS Pago (
+    facturaId INTEGER NOT NULL,
+    nroTransaccion INTEGER NOT NULL UNIQUE CHECK (nroTransaccion >= 0),
+    metodoPagoId INTEGER,
 
+    PRIMARY KEY (facturaId) ,
+    CONSTRAINT fk_factura_id FOREIGN KEY (facturaId) REFERENCES Factura(id),
+    CONSTRAINT fk_metodoPago_id FOREIGN KEY (metodoPagoId) REFERENCES FormaPago(id)
+);
+
+CREATE TABLE IF NOT EXISTS VentaFisica (
+    facturaId INTEGER NOT NULL,
+    sucursalId INTEGER NOT NULL,
+    empleadoId INTEGER NOT NULL,
+
+    PRIMARY KEY (facturaId, sucursalId, empleadoId),
+    CONSTRAINT fk_factura_id FOREIGN KEY (facturaId) REFERENCES Factura(id),
+    CONSTRAINT fk_sucursal_id FOREIGN KEY (sucursalId) REFERENCES Sucursal(id),
+    CONSTRAINT fk_empleado_id FOREIGN KEY (empleadoId) REFERENCES Empleado(id)
+    
+);
+
+CREATE TABLE IF NOT EXISTS FacturaDetalle (
+    id INTEGER GENERATED ALWAYS AS IDENTITY ,
+    facturaId INTEGER NOT NULL,
+    productoId INTEGER NOT NULL,
+    cantidad INTEGER NOT NULL CHECK (cantidad >= 0),
+    precioPor DECIMAL(10, 2) NOT NULL CHECK (precioPor >= 0) ,
+
+    PRIMARY KEY (id),
+    CONSTRAINT fk_factura_id FOREIGN KEY (facturaId) REFERENCES Factura(id),
+    CONSTRAINT fk_producto_id FOREIGN KEY (productoId) REFERENCES Producto(id)
+);
+
+CREATE TABLE IF NOT EXISTS FacturaPromo (
+    facturaId INTEGER NOT NULL ,
+    promoId INTEGER NOT NULL ,
+
+    PRIMARY KEY (facturaId, promoId),
+    CONSTRAINT fk_factura_id FOREIGN KEY (facturaId) REFERENCES Factura(id),
+    CONSTRAINT fk_promo_id FOREIGN KEY (promoId) REFERENCES Promo(id)
+);
+
+CREATE TABLE IF NOT EXISTS OrdenOnline (
+    id INTEGER GENERATED ALWAYS AS IDENTITY ,
+    clienteId INTEGER NOT NULL,
+    nroOrden VARCHAR(50) NOT NULL UNIQUE,
+    fechaCreacion TIMESTAMP NOT NULL ,
+    tipoEnvioId INTEGER NOT NULL ,
+    facturaId INTEGER , 
+
+
+    PRIMARY KEY (id),
+    CONSTRAINT fk_cliente_id FOREIGN KEY (clienteId) REFERENCES Cliente(id),
+    CONSTRAINT fk_tipoEnvio_id FOREIGN KEY (tipoEnvioId) REFERENCES TipoEnvio(id),
+    CONSTRAINT fk_factura_id FOREIGN KEY (facturaId) REFERENCES Factura(id)
+);
+
+
+CREATE TABLE IF NOT EXISTS OrdenDetalle (
+    id INTEGER GENERATED ALWAYS AS IDENTITY , 
+    ordenId INTEGER NOT NULL,
+    productoId INTEGER NOT NULL,
+    cantidad INTEGER NOT NULL CHECK (cantidad >= 0),
+    precioPor DECIMAL(10, 2) NOT NULL CHECK (precioPor >= 0) ,
+
+    PRIMARY KEY (id) ,
+    CONSTRAINT fk_orden_id FOREIGN KEY (ordenId) REFERENCES OrdenOnline(id),
+    CONSTRAINT fk_producto_id FOREIGN KEY (productoId) REFERENCES Producto(id)
+);
+
+/*
+Altered tables id's to modern sql identity integers 
+*/
