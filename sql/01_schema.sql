@@ -84,7 +84,7 @@ CREATE TABLE IF NOT EXISTS Sucursal (
     id INTEGER GENERATED ALWAYS AS IDENTITY ,
     nombre VARCHAR(100) NOT NULL,
     direccion VARCHAR(100),
-    telefono VARCHAR(14),
+    telefono VARCHAR(16),
     horaAbrir INTEGER CHECK (horaAbrir BETWEEN 0 AND 23),
     horaCerrar INTEGER CHECK (horaCerrar BETWEEN 0 AND 23),
     ciudadId INTEGER,
@@ -144,6 +144,10 @@ CREATE TABLE IF NOT EXISTS Producto (
     CONSTRAINT fk_marca_id FOREIGN KEY (marcaId) REFERENCES Marca(id)
 );
 
+ALTER TABLE Producto 
+DROP CONSTRAINT producto_nombre_key ;
+-- this due to the problem of repeated names for different products
+
 CREATE TABLE IF NOT EXISTS Promo (
     id INTEGER GENERATED ALWAYS AS IDENTITY ,
     nombre VARCHAR(100) NOT NULL,
@@ -157,6 +161,13 @@ CREATE TABLE IF NOT EXISTS Promo (
 
     PRIMARY KEY (id)
 );
+
+ALTER TABLE Promo
+ALTER COLUMN codigo SET DATA TYPE VARCHAR(18)  ,
+ALTER COLUMN slogan SET DATA TYPE VARCHAR(150) ;
+-- this due to the problem of short codes and slogans for different promos
+-- this due to the problem of short codes for different promos
+
 
 CREATE TABLE IF NOT EXISTS Cliente(
     id INTEGER GENERATED ALWAYS AS IDENTITY ,
@@ -365,6 +376,3 @@ CREATE TABLE IF NOT EXISTS OrdenDetalle (
     CONSTRAINT fk_producto_id FOREIGN KEY (productoId) REFERENCES Producto(id)
 );
 
-/*
-Altered tables id's to modern sql identity integers 
-*/
