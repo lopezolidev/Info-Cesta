@@ -128,6 +128,9 @@ INSERT INTO Cargo (nombre, descripcion, salarioBasePorHora) VALUES
 ('Dependiente de Farmacia', 'Atencion en la seccion de farmacia', 14.00),
 ('Analista de Inventarios', 'Control y gestion de inventarios', 18.00);
 
+
+-- #####################################################################################################################################
+
 /*
     Main entities - Group 2
     These tables depend on the catalog tables from first group. 
@@ -829,7 +832,441 @@ INSERT INTO Cliente (CI, nombre, apellido, correo, sexo, fechaNacimiento, fechaR
 (29573219, 'Natsumi', 'Kyouno', 'natsuKyou090@gmail.com', 'F', '2004-03-20', '2022-03-11'),
 (27854093, 'Belle', 'Zenless', 'BangouBelle@hotmail.com', 'F', '2003-12-24', '2024-04-14');
 
-/*
-Continue: Group 3 and group 4 inserts
+-- #####################################################################################################################################
 
+
+/*
+    Transaction and Relation Tables - Group 3
+    These are the tables that connect everything. 
+    Depend on the entities from second group and sometimes between them. 
+    They're the heart of our business logic.
+
+    This table must be populated with a procedure:
+    - ProveedorProducto
 */
+
+INSERT INTO ClienteDireccion (clienteId, tipoDireccion, dirLinea1, ciudadId) VALUES
+--Usuarios con 1 direccion:
+(1,'Facturación','Av.Araure',47),
+(2, 'Facturación', 'Calle Bolivar', 61),
+(3, 'Envío', 'Calle Sucre', 62),
+(4, 'Facturación', 'Av. Los Llanos', 63),
+(5, 'Envío', 'Urbanizacion La Victoria', 64),
+(6, 'Envío', 'Barrio Libertad', 65),
+(7, 'Facturación', 'Calle Libertador', 58),
+(8, 'Facturación', 'Avenida Caracas', 59),
+(9, 'Facturación', 'Sector El Centro', 60),
+(10, 'Envío', 'Urbanizacion Los Jardines', 58),
+(11, 'Envío', 'Calle Sucre', 59),
+(12, 'Facturación', 'Barrio La Esperanza', 60),
+(13, 'Envío', 'Avenida 34', 55),
+(14, 'Facturación', 'Calle Urdaneta', 56),
+(15, 'Envío', 'Sector La Limpia', 57),
+(16, 'Facturación', 'Urbanizacion La Victoria', 55),
+(17, 'Facturación', 'Calle El Milagro', 56),
+(18, 'Envío', 'Barrio San Benito', 57),
+(19, 'Facturación', 'Avenida Bolivar', 52),
+(20, 'Facturación', 'Calle Paez', 53),
+(21, 'Envío', 'Sector Los Teques', 54),
+(22, 'Facturación', 'Urbanizacion El Bosque', 52),
+(23, 'Facturación', 'Calle Principal', 53),
+(24, 'Envío', 'Avenida Constitucion', 7),
+(25, 'Facturación', 'Calle Las Flores', 51),
+(26, 'Facturación', 'Calle Calzada del Valle', 8),
+(27, 'Envío', 'San Bernardino', 51),
+(28, 'Facturación', 'Barrio El Valle', 51),
+(29, 'Envío', 'Avenida Delicias', 50),
+(30, 'Facturación', 'Calle 67', 50),
+(31, 'Envío', 'Calle 1 Avenida 3', 15), 
+(32, 'Facturación', 'Avenida Independencia', 13), 
+(33, 'Envío', 'Calle Benito Juarez', 14),
+(34, 'Facturación', 'Avenida Independencia', 48),
+(35, 'Facturación', 'Calle Ribas', 48),
+(36, 'Envío', 'Sector El Tambor', 48),
+(37, 'Envío', 'Urbanizacion El Llanito', 49),
+(38, 'Facturación', 'Barrio Jose Felix Ribas', 49),
+(39, 'Facturación', 'Avenida Reforma', 10), 
+(40, 'Envío', 'Calle 1 Poniente', 11), 
+(41, 'Facturación', 'Boulevard Forjadores', 12),
+(42, 'Facturación', 'Sector Altamira', 47),
+(43, 'Envío', 'Barrio El Cementerio', 47),
+(44, 'Facturación', 'Avenida Corrientes', 44),
+(45, 'Facturación', 'Calle 12', 45),
+(46, 'Envío', 'Urbanizacion Playa Grande', 46),
+(47, 'Facturación', 'Sector Puerto', 46),
+(48, 'Envío', 'Barrio Recoleta', 44),
+(49, 'Facturación', 'Avenida Principal', 41),
+(50, 'Envío', 'Calle 10', 42),
+(51, 'Facturación', 'Sector Centro', 43),
+(52, 'Envío', 'Urbanizacion El Dorado', 41),
+(53, 'Envío', 'Barrio San Jose', 42),
+(54, 'Facturación', 'Avenida Quebrada Seca', 38),
+(55, 'Facturación', 'Calle 200', 39),
+(56, 'Facturación', 'Sector Campo 23', 40),
+(57, 'Facturación', 'Boulevard Tlaquepaque', 6),
+(58, 'Envío', 'Avenida Insurgentes', 1),
+(59, 'Envío', 'Avenida Roosevelt', 35),
+(60, 'Envío', 'Calle 42', 36),
+(61, 'Facturación', 'Sector La Playa', 37),
+(62, 'Facturación', 'Urbanizacion Ciudad Jardin', 35),
+(63, 'Envío', 'Barrio El Prado', 36),
+(64, 'Envío', 'Avenida San Juan', 32),
+(65, 'Facturación', 'Calle 37 Sur', 33),
+(66, 'Facturación', 'Sector Niquia', 34),
+(67, 'Envío', 'Urbanizacion El Poblado', 32),
+(68, 'Facturación', 'Barrio La America', 33),
+(69, 'Facturación', 'Avenida Caracas', 31),
+(70, 'Envío', 'Calle 26', 31),
+(71, 'Facturación', 'Calle Chapultepec', 4),
+(72, 'Envío', 'Avenida Patria', 5),
+(73, 'Envío', 'Barrio La Candelaria', 31),
+(74, 'Facturación', 'Avenida Michigan', 28),
+(75, 'Facturación', 'Avenida Eduardo Molina', 3),
+(76, 'Facturación', 'Sector Riverfront', 30),
+(77, 'Envío', 'Urbanizacion Hyde Park', 28),
+(78, 'Facturación', 'Barrio Lincoln Park', 29),
+(79, 'Facturación', 'Calle Ermita Iztapalapa', 2),
+(80, 'Envío', 'Avenida Benito Juarez', 9),
+
+--Usuarios con 2 direcciones:
+(81, 'Facturación', 'Sector Bayfront', 27),
+(81, 'Envío', 'Urbanizacion Little Havana', 25),
+(82, 'Facturación', 'Barrio Downtown', 26),
+(82, 'Envío', 'Calle OBT', 27),
+(83, 'Facturación', 'Avenida Orange Blossom', 25),
+(83, 'Envío', 'Calle 50', 26),
+(84, 'Facturación', 'Sector South Beach', 27),
+(84, 'Envío', 'Urbanizacion Wynwood', 25),
+(85, 'Facturación', 'Sector Harlem', 24),
+(85, 'Envío', 'Urbanizacion The Bronx', 22),
+(86, 'Facturación', 'Avenida Broadway', 22),
+(86, 'Envío', 'Calle Wall Street', 23),
+(87, 'Facturación', 'Sector Times Square', 24),
+(87, 'Envío', 'Urbanizacion Queens', 22),
+(88, 'Facturación', 'Barrio Brooklyn Heights', 23),
+(88, 'Envío', 'Calle Fifth Avenue', 24),
+(89, 'Facturación', 'Avenida Central Park', 22),
+(89, 'Envío', 'Calle Madison Avenue', 23),
+(90, 'Facturación', 'Avenida Westheimer', 19),
+(90, 'Envío', 'Calle Montrose', 20),
+(91, 'Facturación', 'Sector Deep Ellum', 21),
+(91, 'Envío', 'Urbanizacion Uptown', 19),
+(92, 'Facturación', 'Barrio The Heights', 20),
+(92, 'Envío', 'Calle Oak Lawn', 21),
+(93, 'Facturación', 'Avenida South Congress', 19),
+(93, 'Envío', 'Calle Rainey Street', 20),
+(94, 'Facturación', 'Sector Zilker', 21),
+(94, 'Envío', 'Urbanizacion East Austin', 19),
+(95, 'Facturación', 'Avenida Sunset Blvd', 16),
+(95, 'Envío', 'Calle Santa Monica', 17),
+(96, 'Facturación', 'Sector Fisherman’s Wharf', 18),
+(96, 'Envío', 'Urbanizacion Golden Gate', 16),
+(97, 'Facturación', 'Barrio Mission District', 17),
+(97, 'Envío', 'Calle La Jolla', 18),
+(98, 'Facturación', 'Avenida Rodeo Drive', 16),
+(98, 'Envío', 'Calle Market Street', 17),
+(99, 'Facturación', 'Sector Gaslamp Quarter', 18),
+(99, 'Envío', 'Urbanizacion Pacific Beach', 16),
+(100, 'Facturación', 'Barrio Chinatown', 17),
+(100, 'Envío', 'Sector Beverly Hills', 18);
+
+INSERT INTO ProductoRecomendadoParaProducto(productoId, productoRecomendadoId, mensaje) VALUES
+(52, 79, 'Sugerencia personalizada basada en compras similares.'),
+(57, 44, 'Una excelente opcion recomendada por otros clientes.'),
+(50, 65, 'Descubra por que este producto es una gran eleccion junto con el suyo.'),
+(161, 199, 'Sugerencia personalizada basada en compras similares.'),
+(12, 195, 'Una excelente opcion recomendada por otros clientes.'),
+(22, 130, 'Este articulo puede mejorar la experiencia de tu compra actual.'),
+(99, 65, 'Este articulo puede mejorar la experiencia de tu compra actual.'),
+(52, 195, 'Una excelente opcion recomendada por otros clientes.'),
+(1, 29, 'Una excelente opcion recomendada por otros clientes.'),
+(12, 172, 'Sugerencia personalizada basada en compras similares.'),
+(5, 82, 'Descubra por que este producto es una gran eleccion junto con el suyo.'),
+(59, 186, 'Este articulo puede mejorar la experiencia de tu compra actual.'),
+(75, 180, 'Los compradores frecuentemente combinan estos productos.'),
+(57, 45, 'Este articulo puede mejorar la experiencia de tu compra actual.'),
+(158, 99, 'Una excelente opcion recomendada por otros clientes.'),
+(182, 125, 'Los compradores frecuentemente combinan estos productos.'),
+(29, 135, 'Este producto complementa bien tu compra.'),
+(122, 145, 'Clientes que compraron este producto tambien adquirieron el recomendado.'),
+(197, 140, 'Los compradores frecuentemente combinan estos productos.'),
+(190, 112, 'Clientes que compraron este producto tambien adquirieron el recomendado.'),
+(16, 23, 'Una excelente opcion recomendada por otros clientes.'),
+(136, 182, 'Los compradores frecuentemente combinan estos productos.'),
+(138, 32, 'Descubra por que este producto es una gran eleccion junto con el suyo.'),
+(11, 179, 'Sugerencia personalizada basada en compras similares.'),
+(145, 87, 'Nuestros expertos recomiendan este producto como complemento.'),
+(1, 31, 'Una excelente opcion recomendada por otros clientes.'),
+(20, 35, 'Este producto complementa bien tu compra.'),
+(34, 60, 'Nuestros expertos recomiendan este producto como complemento.'),
+(82, 163, 'Sugerencia personalizada basada en compras similares.'),
+(132, 153, 'Nuestros expertos recomiendan este producto como complemento.'),
+(11, 98, 'Una excelente opcion recomendada por otros clientes.'),
+(197, 106, 'Nuestros expertos recomiendan este producto como complemento.'),
+(66, 24, 'Una excelente opcion recomendada por otros clientes.'),
+(187, 43, 'Clientes que compraron este producto tambien adquirieron el recomendado.'),
+(97, 116, 'Descubra por que este producto es una gran eleccion junto con el suyo.'),
+(30, 56, 'Este producto complementa bien tu compra.'),
+(157, 5, 'Los compradores frecuentemente combinan estos productos.'),
+(79, 15, 'Basado en tendencias, este articulo es una excelente opcion.'),
+(47, 82, 'Una excelente opcion recomendada por otros clientes.'),
+(106, 48, 'Los compradores frecuentemente combinan estos productos.');    
+
+INSERT INTO ProductoRecomendadoParaCliente (clienteId, productoRecomendadoId, fechaRecomendacion, mensaje) VALUES
+(23, 198, '2025-02-16', 'Este producto es ideal para sus necesidades.'),
+(98, 68, '2025-02-20', 'Este producto te esta buscando, compralo ahora.'),
+(29, 151, '2025-02-20', 'Clientes con gustos similares han comprado este producto.'),
+(52, 140, '2025-02-10', 'Este articulo coincide con tu historial de busqueda.'),
+(1, 109, '2025-02-14', 'Basado en tu historial, este articulo podria interesarte.'),
+(63, 123, '2025-01-30', 'No te hace falta esto para completar tu compra?.'),
+(64, 166, '2025-02-28', 'Oportunidad especial basada en sus preferencias.'),
+(94, 125, '2025-01-30', 'Nuestra recomendacion para ti, teniendo en cuenta tus gustos.'),
+(93, 1, '2025-02-17', 'Sugerencia personalizada para ti.'),
+(85, 158, '2025-02-17', 'Sugerencia personalizada que te encantara.'),
+(40, 2, '2025-02-25', 'Oferta especial en base a sus compras anteriores.'),
+(21, 161, '2025-01-30', 'Recomendado por nuestras tendencias de compra.'),
+(36, 125, '2025-02-19', 'Recomendacion segun las compras que hiciste antes.'),
+(58, 176, '2025-02-02', 'Recomendado segun sus compras anteriores.'),
+(22, 172, '2025-02-14', 'Este producto ha sido popular entre clientes con gustos similares a los tuyos.'),
+(29, 89, '2025-02-14', 'Nuestra recomendacion exclusiva para ti.'),
+(85, 13, '2025-02-09', 'Clientes con gustos similares han comprado este producto.'),
+(68, 48, '2025-02-14', 'Oferta especial en base a sus compras anteriores.'),
+(34, 84, '2025-02-02', 'Clientes con gustos similares han comprado este producto.'),
+(54, 12, '2025-02-23', 'Sugerencia personalizada que no debes ignorar.'),
+(41, 150, '2025-02-11', 'Este producto es ideal para sus necesidades.'),
+(88, 100, '2025-02-21', 'Recomendado segun sus compras anteriores.'),
+(78, 105, '2025-02-08', 'Clientes con gustos similares han comprado este producto.'),
+(63, 131, '2025-02-12', 'Sugerencia excepcional que te encantara.'),
+(55, 95, '2025-02-07', 'No se pierda esta sugerencia personalizada.'),
+(85, 84, '2025-02-13', 'Este producto ha sido popular nuestros ultimos clientes.'),
+(45, 97, '2025-02-25', 'Recomendado por nuestras tendencias de compra.'),
+(56, 2, '2025-02-22', 'Basado en tu historial, este articulo podria interesarle.'),
+(30, 7, '2025-02-12', 'Recomendado segun sus compras anteriores.'),
+(55, 25, '2025-02-18', 'Oportunidad especial basada en sus preferencias.'),
+(85, 20, '2025-02-18', 'Una excelente opcion para comprar el dia de hoy.'),
+(77, 32, '2025-02-24', 'Este producto ha sido popular entre clientes similares.'),
+(30, 135, '2025-02-03', 'Este producto es ideal para sus necesidades.'),
+(12, 105, '2025-02-01', 'Este producto es ideal para sus necesidades.'),
+(70, 123, '2025-02-14', 'Este producto ha sido popular entre clientes similares.'),
+(53, 27, '2025-02-01', 'Oferta especial en base a sus compras anteriores.'),
+(90, 126, '2025-02-02', 'Oportunidad especial basada en sus preferencias.'),
+(53, 176, '2025-02-21', 'Producto que necesitas  segun tus preferencias.'),
+(71, 76, '2025-02-05', 'Recomendado segun sus compras anteriores.'),
+(17, 150, '2025-01-30', 'Una excelente que puede ser de tu interes.');
+
+-- intermediate table. Needed to make a purchase, 25% of customers have products in their cart
+-- Each customer has between 2 and 6 products in their cart
+-- The products in the cart are a mix of low, medium, and high priced items
+-- The quantity of each product in the cart varies between 1 and 6
+INSERT INTO Carrito (clienteId, productoId, fechaAgregado, cantidad, precioPor) VALUES
+-- Cliente 1 (4 productos)
+(1, 1, '2025-09-22', 2, 1.50),
+(1, 7, '2025-09-23', 1, 2.00),
+(1, 12, '2025-09-23', 3, 1.00),
+(1, 31, '2025-09-24', 1, 5.90),
+-- Cliente 5 (3 productos)
+(5, 10, '2025-09-24', 1, 0.75),
+(5, 25, '2025-09-24', 2, 1.00),
+(5, 50, '2025-09-24', 1, 6.80),
+-- Cliente 10 (5 productos)
+(10, 8, '2025-09-22', 1, 1.20),
+(10, 16, '2025-09-22', 2, 1.25),
+(10, 22, '2025-09-23', 1, 5.00),
+(10, 45, '2025-09-24', 4, 1.80),
+(10, 60, '2025-09-24', 1, 4.90),
+-- Cliente 15 (2 productos)
+(15, 107, '2025-09-23', 3, 1.70),
+(15, 138, '2025-09-23', 1, 3.20),
+-- Cliente 20 (6 productos)
+(20, 1, '2025-09-21', 6, 1.50),
+(20, 2, '2025-09-21', 6, 1.45),
+(20, 31, '2025-09-22', 2, 5.90),
+(20, 57, '2025-09-22', 2, 2.00),
+(20, 88, '2025-09-23', 1, 3.80),
+(20, 145, '2025-09-24', 1, 2.60),
+-- Cliente 25 (4 productos)
+(25, 4, '2025-09-24', 1, 1.80),
+(25, 36, '2025-09-24', 2, 2.10),
+(25, 66, '2025-09-24', 1, 2.50),
+(25, 99, '2025-09-24', 1, 1.40),
+-- Cliente 30 (3 productos)
+(30, 210, '2025-09-23', 5, 2.50),
+(30, 215, '2025-09-23', 2, 6.00),
+(30, 23, '2025-09-23', 1, 2.00),
+-- Cliente 35 (5 productos)
+(35, 11, '2025-09-22', 1, 4.00),
+(35, 41, '2025-09-22', 1, 1.50),
+(35, 71, '2025-09-22', 2, 9.60),
+(35, 101, '2025-09-23', 1, 2.70),
+(35, 131, '2025-09-24', 3, 4.80),
+-- Cliente 40 (2 productos)
+(40, 184, '2025-09-24', 1, 7.20),
+(40, 109, '2025-09-24', 1, 3.50),
+-- Cliente 45 (4 productos)
+(45, 19, '2025-09-23', 2, 1.50),
+(45, 49, '2025-09-23', 1, 4.00),
+(45, 79, '2025-09-23', 3, 2.50),
+(45, 119, '2025-09-23', 1, 8.30),
+-- Cliente 50 (3 productos)
+(50, 150, '2025-09-22', 1, 9.60),
+(50, 180, '2025-09-22', 2, 2.40),
+(50, 202, '2025-09-22', 4, 2.20),
+-- Cliente 55 (4 productos)
+(55, 12, '2025-09-24', 2, 1.00),
+(55, 42, '2025-09-24', 1, 3.70),
+(55, 72, '2025-09-24', 1, 3.10),
+(55, 102, '2025-09-24', 3, 3.20),
+-- Cliente 60 (6 productos)
+(60, 6, '2025-09-23', 1, 3.50),
+(60, 17, '2025-09-23', 2, 1.80),
+(60, 56, '2025-09-23', 1, 1.80),
+(60, 86, '2025-09-24', 2, 1.30),
+(60, 116, '2025-09-24', 1, 3.40),
+(60, 146, '2025-09-24', 1, 4.00),
+-- Cliente 65 (3 productos)
+(65, 18, '2025-09-22', 1, 2.10),
+(65, 48, '2025-09-22', 2, 7.50),
+(65, 78, '2025-09-22', 1, 5.50),
+-- Cliente 70 (5 productos)
+(70, 28, '2025-09-21', 1, 6.50),
+(70, 58, '2025-09-21', 2, 5.90),
+(70, 88, '2025-09-22', 1, 3.80),
+(70, 118, '2025-09-23', 3, 2.50),
+(70, 148, '2025-09-24', 1, 2.90),
+-- Cliente 75 (2 productos)
+(75, 15, '2025-09-24', 2, 2.50),
+(75, 195, '2025-09-24', 1, 1.10),
+-- Cliente 80 (4 productos)
+(80, 5, '2025-09-23', 1, 0.95),
+(80, 35, '2025-09-23', 3, 1.30),
+(80, 65, '2025-09-23', 1, 4.90),
+(80, 95, '2025-09-23', 2, 1.10),
+-- Cliente 85 (6 productos)
+(85, 21, '2025-09-22', 1, 2.00),
+(85, 51, '2025-09-22', 2, 1.60),
+(85, 81, '2025-09-22', 1, 1.00),
+(85, 111, '2025-09-22', 1, 2.00),
+(85, 141, '2025-09-22', 2, 1.50),
+(85, 171, '2025-09-22', 1, 2.20),
+-- Cliente 90 (3 productos)
+(90, 211, '2025-09-24', 4, 2.00),
+(90, 212, '2025-09-24', 1, 2.20),
+(90, 199, '2025-09-24', 1, 2.10),
+-- Cliente 95 (4 productos)
+(95, 213, '2025-09-23', 2, 1.70),
+(95, 216, '2025-09-23', 3, 2.00),
+(95, 212, '2025-09-23', 2, 1.30),
+(95, 208, '2025-09-23', 1, 1.70),
+-- Cliente 100 (5 productos)
+(100, 200, '2025-09-22', 12, 2.70),
+(100, 184, '2025-09-23', 1, 7.20),
+(100, 154, '2025-09-23', 2, 2.30),
+(100, 124, '2025-09-24', 1, 4.50),
+(100, 94, '2025-09-24', 1, 2.40),
+-- Cliente 83 (4 productos)
+(83, 77, '2025-09-24', 1, 2.50),
+(83, 91, '2025-09-24', 2, 3.10),
+(83, 105, '2025-09-24', 1, 4.80),
+(83, 123, '2025-09-24', 3, 3.20),
+-- Cliente 73 (3 productos)
+(73, 55, '2025-09-23', 1, 5.70),
+(73, 89, '2025-09-23', 2, 2.30),
+(73, 112, '2025-09-23', 1, 5.80),
+-- Cliente 62 (2 productos)
+(62, 157, '2025-09-22', 2, 1.40),
+(62, 197, '2025-09-22', 1, 2.20),
+-- Cliente 48 (5 productos)
+(48, 13, '2025-09-24', 1, 1.60),
+(48, 43, '2025-09-24', 2, 6.80),
+(48, 73, '2025-09-24', 1, 4.50),
+(48, 103, '2025-09-24', 3, 2.60),
+(48, 133, '2025-09-24', 1, 9.50);
+
+INSERT INTO PromoEspecializada (promoId, productoId, categoriaId, marcaId) VALUES
+(5, 31, NULL, NULL),  -- Descuento en Sprite (Promo PHYSIC50)
+(8, 189, NULL, NULL), -- Descuento en Helado de Chocolate (SUMMER200)
+(28, 1, NULL, NULL),  -- Descuento en Coca-Cola (RefreshLove)
+(28, 2, NULL, NULL),  -- Descuento en Pepsi (RefreshLove)
+(28, 29, NULL, NULL), -- Descuento en Sprite (RefreshLove)
+(35, 102, NULL, NULL), -- Descuento en Agua Mineral Evian (SPORTSFORLIFE)
+(35, 57, NULL, NULL), -- Descuento en Bebida Isotonica Gatorade (SPORTSFORLIFE)
+(35, 16, NULL, NULL), -- Descuento en Gatorade (SPORTSFORLIFE)
+(3, 107, NULL, NULL), -- Descuento en Papas Fritas Lays Clásicas (SUMMERT1M3)
+(3, 138, NULL, NULL), -- Descuento en Energizante Monster (SUMMERT1M3)
+(3, 45, NULL, NULL),  -- Descuento en Refresco Fanta (SUMMERT1M3)
+(25, 109, NULL, NULL), -- Descuento en Manteca de Mani Skippy (SWEETLOVE)
+(25, 184, NULL, NULL), -- Descuento en Miel Pura de Abeja (SWEETLOVE)
+(24, 215, NULL, NULL), -- Descuento en Takoyakis (NIHON<3)
+(24, 210, NULL, NULL), -- Descuento en Ramen Instantáneo (NIHON<3)
+(24, 145, NULL, NULL), -- Descuento en Salsa de Soja Kikkoman (NIHON<3)
+(17, 17, NULL, NULL),  -- Descuento en Chocolate Hershey's (OUT60)
+(17, 168, NULL, NULL), -- Descuento en Chocolate Blanco Hershey (OUT60)
+
+-- Promociones aplicadas a categorías específicas
+(25, NULL, 5, NULL),  -- Descuento en Postres y Dulces (SWEETLOVE)
+(25, NULL, 21, NULL), -- Descuento en Chocolates y Dulces (SWEETLOVE)
+(22, NULL, 1, NULL),  -- Descuento en toda la tienda los viernes (FRIDAYLOVE)
+(33, NULL, 10, NULL), -- Descuento en Despensa los sábados (SATURDAYMARKET)
+(34, NULL, 3, NULL),  -- Descuento en Carnes el día del trabajador (WORKERDAY)
+(35, NULL, 1, NULL),  -- Descuento en Bebidas en general (SPORTSFORLIFE)
+(35, NULL, 6, NULL),  -- Descuento en Snacks (SPORTSFORLIFE)
+(35, NULL, 10, NULL), -- Descuento en Despensa (SPORTSFORLIFE)
+(27, NULL, 2, NULL),  -- Descuento en Lácteos (MityxMity)
+(27, NULL, 5, NULL),  -- Descuento en Panadería (MityxMity)
+(27, NULL, 17, NULL), -- Descuento en Helados (MityxMity)
+(38, NULL, 6, NULL),  -- Descuento en Chucherías (FEALTERADAISBACK)
+(38, NULL, 1, NULL),  -- Descuento en Bebidas (FEALTERADAISBACK) 
+(31, NULL, 4, NULL),  -- Descuento en Frutas y Verduras (AUTUMN)
+(31, NULL, 30, NULL), -- Descuento en Comida Preparada (AUTUMN)
+
+-- Promociones aplicadas a marcas específicas
+(5, NULL, NULL, 31),  -- Descuento en productos marca InfoCesta (PHYSIC50)
+(25, NULL, NULL, 26), -- Descuento en Cheesecake Factory (SWEETLOVE)
+(35, NULL, NULL, 28), -- Descuento en Gatorade (SPORTSFORLIFE)
+(28, NULL, NULL, 1),  -- Descuento en Coca-Cola Company (RefreshLove)
+(28, NULL, NULL, 2),  -- Descuento en PepsiCo (RefreshLove)
+(5, NULL, NULL, 9),   -- Descuento en productos de P&G (PHYSIC50)
+(5, NULL, NULL, 10),  -- Descuento en productos de Lays (PHYSIC50)
+(5, NULL, NULL, 11),  -- Descuento en productos de Bimbo (PHYSIC50)
+(5, NULL, NULL, 15),  -- Descuento en productos de Molinos (PHYSIC50)
+(17, NULL, NULL, 14), -- Descuento en productos de Arcor (OUT60)
+(17, NULL, NULL, 32), -- Descuento en productos de Hershey's (OUT60)
+(27, NULL, NULL, 25), -- Descuento en productos de Polar (MityxMity)
+(27, NULL, NULL, 26), -- Descuento en productos de Cheesecake Factory (MityxMity)
+(27, NULL, NULL, 22), -- Descuento en productos de Arizona (MityxMity)
+(31, NULL, NULL, 3),  -- Descuento en productos de Nestlé (AUTUMN)
+(31, NULL, NULL, 12), -- Descuento en productos de La Serenísima (AUTUMN)
+(31, NULL, NULL, 28), -- Descuento en productos de Gatorade (AUTU
+(3, NULL, NULL, 31), -- Enjuague Bucal InfoCesta
+(3, NULL, NULL, 31), -- Toallitas Húmedas InfoCesta
+(3, NULL, NULL, 31), -- Agua saborizada a Fresa InfoCesta
+(3, NULL, NULL, 31), -- Agua saborizada a Limón InfoCesta
+(3, NULL, NULL, 31), -- Agua saborizada a Naranja InfoCesta
+(3, NULL, NULL, 31), -- Protector Solar InfoCesta
+(3, NULL, NULL, 31), -- Jabón para la Cara InfoCesta
+(3, NULL, NULL, 31), -- Gel Antibacterial InfoCesta
+(3, NULL, NULL, 31), -- Tapabocas InfoCesta
+(3, NULL, NULL, 31), -- Ramen Instantáneo InfoCesta
+(3, NULL, NULL, 31), -- Galletas con crema de Fresa InfoCesta
+(3, NULL, NULL, 31), -- Marquesa de Chocolate InfoCesta
+(3, NULL, NULL, 31), -- Helado de Torta Suiza InfoCesta
+(3, NULL, NULL, 31), -- Nuggets Congelados InfoCesta
+(3, NULL, NULL, 31); -- Takoyakis InfoCesta
+
+
+
+/*
+    Detail Tables and Final Associations - Group 4
+    These are the most dependent tables. 
+    Usually register transaction details and cannot exist without them.
+
+    The following tables must be populated with procedures and triggers:
+    - Pago
+    - VentaFisica
+    - FacturaPromo
+    - OrdenOnline
+    - OrdenDetalle
+*/
+
+
+

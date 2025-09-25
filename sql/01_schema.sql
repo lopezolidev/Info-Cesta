@@ -284,6 +284,14 @@ CREATE TABLE IF NOT EXISTS PromoEspecializada (
     CONSTRAINT fk_marca_id FOREIGN KEY (marcaId) REFERENCES Marca(id)
 );
 
+ALTER TABLE PromoEspecializada
+ADD CONSTRAINT chk_promo_un_solo_objetivo
+CHECK (
+    (CASE WHEN productoId IS NOT NULL THEN 1 ELSE 0 END) +
+    (CASE WHEN categoriaId IS NOT NULL THEN 1 ELSE 0 END) +
+    (CASE WHEN marcaId IS NOT NULL THEN 1 ELSE 0 END) = 1
+); -- checks that only one of the three fields is not null → the promo is specialized in only one of them
+
 CREATE TABLE IF NOT EXISTS Factura (
     id INTEGER GENERATED ALWAYS AS IDENTITY ,
     fechaEmision TIMESTAMP NOT NULL,
@@ -375,4 +383,3 @@ CREATE TABLE IF NOT EXISTS OrdenDetalle (
     CONSTRAINT fk_orden_id FOREIGN KEY (ordenId) REFERENCES OrdenOnline(id),
     CONSTRAINT fk_producto_id FOREIGN KEY (productoId) REFERENCES Producto(id)
 );
-
