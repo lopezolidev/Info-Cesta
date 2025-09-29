@@ -4,7 +4,7 @@
 -- 1. Function to calculate the shipping cost of an online order.
 -- Suggested name: calculate_shipping_cost(order_id INTEGER)
 -- RETURNS DECIMAL 
-CREATE FUNCTION calculo_costo_envio(orden_online_id INTEGER)
+CREATE OR REPLACE FUNCTION calculo_costo_envio(orden_online_id INTEGER)
 RETURNS DECIMAL 
 AS $$
     SELECT 
@@ -21,7 +21,7 @@ $$ LANGUAGE sql ;
 -- 2. Function to calculate the subtotal of a bill (sum of product prices before discounts and VAT).
 -- Suggested name: calculate_subtotal_bill(bill_id INTEGER)
 -- RETURNS DECIMAL
-CREATE FUNCTION calculo_subtotal_factura(factura_id INTEGER)
+CREATE OR REPLACE FUNCTION calculo_subtotal_factura(factura_id INTEGER)
 RETURNS DECIMAL
 AS $$
     SELECT 
@@ -36,7 +36,7 @@ $$ LANGUAGE SQL ;
 -- Suggested name: calculate_total_discount(bill_id INTEGER)
 -- RETURNS DECIMAL
 -- tables related: FacturaDetalle, Promo, PromoEspecializada, FacturaPromo
-CREATE FUNCTION calculo_descuento_total(factura_id INTEGER)
+CREATE OR REPLACE FUNCTION calculo_descuento_total(factura_id INTEGER, solo_no_exentos BOOLEAN)
 RETURNS DECIMAL
 AS $$
     SELECT
@@ -76,17 +76,94 @@ AS $$
                 prod.categoriaId = pe.categoriaId
             )
         )
+        AND
+        (
+            solo_no_exentos IS FALSE
+            OR 
+            prod.esExentoIVA IS FALSE    
+        )
 $$ LANGUAGE SQL ;
 
 -- 4. Function to calculate the total VAT amount to be paid for non-exempt products.
 -- Suggested name: calculate_vat_amount(bill_id INTEGER)
 -- RETURNS DECIMAL
 
+-- had to create this additional function which counts the subTotal for stock not excempt from VAT
+CREATE OR REPLACE FUNCTION calculo_subtotalNoExentoIVA_factura(factura_id INTEGER)
+RETURNS DECIMAL
+AS $$
+    SELECT 
+        COALESCE( SUM( fd.precioPor * fd.cantidad ), 0.00)
+    FROM 
+        FacturaDetalle AS fd
+    JOIN
+        Producto AS prod ON prod.id = fd.productoId  
+    WHERE 
+        fd.facturaId = factura_id 
+        AND 
+        prod.esExentoIVA IS FALSE ;
+
+$$ LANGUAGE SQL ;
+
+CREATE OR REPLACE FUNCTION calculo_montoIVA(factura_id INTEGER)
+RETURNS DECIMAL
+AS 
+$$
+    DECLARE
+        tasa_IVA DECIMAL := 0.16 ;
+        subTotal_no_exentos DECIMAL := 0.00 ;
+        totalDescuento_no_exentos DECIMAL := 0.00 ;
+
+    BEGIN
+        SELECT calculo_subtotalNoExentoIVA_factura(factura_id)
+        INTO subTotal_no_exentos ;
+
+        SELECT calculo_descuento_total(factura_id, TRUE)
+        INTO totalDescuento_no_exentos ;
+
+        RETURN GREATEST((subTotal_no_exentos - totalDescuento_no_exentos), 0) * tasa_IVA ;
+    END
+
+$$ LANGUAGE plpgsql
 
 -- 5. Function to calculate the final total amount of the bill.
 -- Suggested name: calculate_total_bill_amount(bill_id INTEGER)
 -- RETURNS DECIMAL
+CREATE OR REPLACE FUNCTION montoTotal(factura_id INTEGER)
+RETURNS DECIMAL
+AS
+$$
+    DECLARE 
+        subTotal DECIMAL := 0.00 ;
+        totalDescuento DECIMAL := 0.00 ;
+        montoIVA DECIMAL := 0.00 ;
+        montoEnvio DECIMAL := 0.00 ;
 
+    BEGIN
+        SELECT calculo_subtotal_factura(factura_id) 
+        INTO subTotal ;
+
+        SELECT calculo_descuento_total(factura_id, FALSE) 
+        INTO totalDescuento ;
+
+        SELECT calculo_montoIVA(factura_id)
+        INTO montoIVA ;
+
+        SELECT 
+            calculo_costo_envio(oo.id)
+            INTO
+            montoEnvio 
+        FROM
+            OrdenOnline AS oo
+        WHERE
+            oo.facturaId = factura_id ;
+
+        montoEnvio := COALESCE(montoEnvio, 0.00) ;
+
+        RETURN (subTotal - totalDescuento) + montoIVA + montoEnvio ;
+    END ;
+
+$$ LANGUAGE plpgsql
 
 -- =============== GROUP B: FUNCTIONS FOR PROMOTION VALIDATION ===============
 -- This function will check if a promotion is applicable to a specific purchase.
