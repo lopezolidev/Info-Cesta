@@ -163,7 +163,7 @@ $$
         RETURN (subTotal - totalDescuento) + montoIVA + montoEnvio ;
     END ;
 
-$$ LANGUAGE plpgsql
+$$ LANGUAGE plpgsql ;
 
 -- =============== GROUP B: FUNCTIONS FOR PROMOTION VALIDATION ===============
 -- This function will check if a promotion is applicable to a specific purchase.
@@ -172,3 +172,35 @@ $$ LANGUAGE plpgsql
 --    (Checks the date and type of promotion - Online/Physical).
 -- Suggested name: verify_valid_promotion(promo_id INTEGER, bill_id INTEGER)
 -- RETURNS BOOLEAN
+
+CREATE OR REPLACE FUNCTION verifica_promo_valida(promo_id INTEGER, factura_id INTEGER)
+RETURNS BOOLEAN
+AS 
+$$
+    SELECT 
+        (fac.fechaEmision >= pr.fechaInicio AND fac.fechaEmision <= pr.fechaFin)
+        AND
+        (
+            (oo.id IS NOT NULL 
+            AND 
+            pr.tipoPromocion IN ('Online', 'Ambas'))
+            OR 
+            (vf.facturaId IS NOT NULL 
+            AND
+            pr.tipoPromocion IN ('Física', 'Ambas'))
+        )
+    FROM 
+        FacturaPromo AS fp
+        JOIN 
+            Promo AS pr ON pr.id = fp.promoId
+        JOIN
+            Factura AS fac ON fac.id = fp.facturaId 
+        LEFT JOIN
+            OrdenOnline AS oo ON oo.facturaId = fp.facturaId
+        LEFT JOIN 
+            VentaFisica AS vf ON vf.facturaId = fp.facturaId
+    WHERE 
+        fp.promoId = promo_id 
+        AND
+        fp.facturaId = factura_id 
+$$ LANGUAGE SQL ;
