@@ -40,7 +40,14 @@ CREATE FUNCTION calculo_descuento_total(factura_id INTEGER)
 RETURNS DECIMAL
 AS $$
     SELECT
-
+        COALESCE(SUM(
+            CASE 
+                WHEN p.tipoDescuento = 'Porcentaje'
+                    THEN ( fd.precioPor * (p.valorDescuento / 100) ) * fd.cantidad
+                WHEN p.tipoDescuento = 'Fijo'
+                    THEN p.valorDescuento 
+            END
+        ), 0.00)
     FROM 
         FacturaDetalle AS fd
     JOIN 
