@@ -32,3 +32,26 @@ $$  ;
 
 -- to do: procedure C - Create physical invoice given a customer and an employee (this will also create the relationship
 -- VentaFisica)
+CREATE OR REPLACE PROCEDURE crear_facutura_fisica(
+    cliente_id INTEGER ,
+    empleado_id INTEGER ,
+    INOUT p_nueva_factura_id INTEGER DEFAULT NULL 
+)
+LANGUAGE plpgsql
+AS $$
+    DECLARE 
+        v_sucursal_id INTEGER ;
+    BEGIN
+        SELECT sucursalId
+        INTO v_sucursal_id 
+        FROM Empleado
+        WHERE id = empleado_id ;
+
+        INSERT INTO Factura (fechaEmision, clienteId, subTotal, montoDescuentoTotal, porcentajeIVA, montoIVA, montoTotal)
+        VALUES (NOW(), cliente_id, 0, 0, 0, 0, 0)
+        RETURNING id INTO p_nueva_factura_id;
+
+        INSERT INTO VentaFisica (facturaId, sucursalId, empleadoId)
+        VALUES (p_nueva_factura_id, v_sucursal_id, empleado_id) ;
+    END ;
+$$ ;
