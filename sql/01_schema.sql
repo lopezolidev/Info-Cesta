@@ -319,7 +319,7 @@ CREATE TABLE IF NOT EXISTS Pago (
     metodoPagoId INTEGER,
 
     PRIMARY KEY (facturaId) ,
-    CONSTRAINT fk_factura_id FOREIGN KEY (facturaId) REFERENCES Factura(id),
+    CONSTRAINT fk_factura_id FOREIGN KEY (facturaId) REFERENCES     (id),
     CONSTRAINT fk_metodoPago_id FOREIGN KEY (metodoPagoId) REFERENCES FormaPago(id)
 );
 
