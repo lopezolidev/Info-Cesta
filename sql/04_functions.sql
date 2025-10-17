@@ -170,8 +170,6 @@ $$ LANGUAGE plpgsql ;
 
 -- 1. Function to check if a promotion is valid for a bill.
 --    (Checks the date and type of promotion - Online/Physical).
--- Suggested name: verify_valid_promotion(promo_id INTEGER, bill_id INTEGER)
--- RETURNS BOOLEAN
 
 CREATE OR REPLACE FUNCTION verifica_promo_valida(promo_id INTEGER, factura_id INTEGER)
 RETURNS BOOLEAN

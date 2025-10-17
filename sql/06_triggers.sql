@@ -154,6 +154,7 @@ $$ LANGUAGE plpgsql ;
 CREATE TRIGGER increment_30_product_trigger
 AFTER INSERT
 ON ProveedorProducto
+
 FOR EACH ROW
 EXECUTE FUNCTION incremento_30_producto_trigger_func() ;
 
@@ -185,3 +186,75 @@ BEFORE INSERT
 ON FacturaPromo
 FOR EACH ROW 
 EXECUTE FUNCTION verificar_promo_valida_trigger_func() ;
+ 
+
+-- TO DO: 
+/*
+e.​ Trigger de registro automático de devoluciones y ajuste de stock
+*/
+
+-- D : Trigger to avoid online and physical purchases for out of stock products
+CREATE OR REPLACE FUNCTION online_physical_out_of_stock_trigger_func()
+RETURNS TRIGGER
+AS $$
+    DECLARE
+        cant_producto INT := 0 ;
+    BEGIN
+-- finding out stock of the product
+        SELECT
+            cantidad
+        INTO
+            cant_producto
+        FROM 
+            Inventario
+        WHERE
+            productoId = NEW.productoId ;
+
+-- if the product doesn't exist, the query will return NULL, we coalesce that result 
+        cant_producto := COALESCE(cant_producto, 0) ;
+
+-- if it passess all the conditions then we can insert the product
+        IF cant_producto = 0 THEN
+            RAISE EXCEPTION 'El producto no está disponible por los momentos' ;
+        ELSIF cant_producto < NEW.cantidad THEN
+            RAISE EXCEPTION 'No hay unidades suficientes del producto para esta compra' ;
+        ELSE
+            RETURN NEW ;
+        END IF ;
+
+    END;
+$$ LANGUAGE plpgsql ;
+
+CREATE TRIGGER valid_stock_online_purchase
+BEFORE INSERT
+ON OrdenDetalle
+FOR EACH ROW 
+EXECUTE FUNCTION online_physical_out_of_stock_trigger_func() ;
+
+CREATE TRIGGER valid_stock_physical_purchase
+BEFORE INSERT
+ON FacturaDetalle
+FOR EACH ROW 
+EXECUTE FUNCTION online_physical_out_of_stock_trigger_func() ;
+
+-- E : Trigger for automatic returns registration and stock adjustment
+CREATE OR REPLACE FUNCTION automatic_stock_return_trigger_func()
+RETURNS TRIGGER
+AS $$
+    BEGIN
+        UPDATE 
+            Inventario
+        SET 
+            cantidad = cantidad + OLD.cantidad
+        WHERE 
+            productoId = OLD.productoId ;
+
+        RETURN OLD ;
+    END ;
+$$ LANGUAGE plpgsql ;
+
+CREATE TRIGGER automatic_stock_return
+AFTER DELETE
+ON FacturaDetalle
+FOR EACH ROW
+EXECUTE FUNCTION automatic_stock_return_trigger_func() ;
