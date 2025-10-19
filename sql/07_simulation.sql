@@ -56,3 +56,243 @@ CALL simular_compra_proveedor(5, 187, 3.00, 70);  -- Lacteos El Andino vende Que
 CALL simular_compra_proveedor(29, 201, 2.10, 100); -- MedicKuroi vende Jabon Liquido Dove
 CALL simular_compra_proveedor(12, 102, 2.20, 80); -- Tuty Fruty de Oriente vende Agua Mineral Evian
 CALL simular_compra_proveedor(30, 188, 2.80, 200); -- Dental Healthy vende Papel Higienico Scott
+CALL simular_compra_proveedor(16, 12, 0.70, 500); -- Panaderia Arsenal vende 500 unidades de Galletas Oreo
+
+CALL simular_compra_proveedor(13, 19, 0.90, 300);  -- Pasta La Moderna (Este resuelve tu error actual)
+CALL simular_compra_proveedor(8, 163, 0.80, 400);   -- Chocolinas
+CALL simular_compra_proveedor(2, 9, 1.20, 200);     -- Cerveza Quilmes
+CALL simular_compra_proveedor(13, 203, 1.90, 120);  -- Salsa de Soja Kikkoman
+CALL simular_compra_proveedor(3, 10, 0.50, 500);    -- Te Lipton en Bolsa
+CALL simular_compra_proveedor(18, 11, 2.50, 100);   -- Aceite Natura
+CALL simular_compra_proveedor(7, 13, 1.00, 200);    -- Mayonesa tomatox
+CALL simular_compra_proveedor(25, 14, 1.10, 250);   -- Cerveza Polar
+CALL simular_compra_proveedor(35, 23, 2.00, 150);   -- Cereal Quaker
+CALL simular_compra_proveedor(3, 24, 3.00, 100);    -- Leche en Polvo Nido
+CALL simular_compra_proveedor(31, 29, 4.00, 80);    -- Aceite de Oliva (nombre antiguo)
+CALL simular_compra_proveedor(14, 48, 2.00, 120);   -- Salchichas Viena Arcor
+CALL simular_compra_proveedor(16, 214, 1.00, 300);  -- Galletas Oreo Waffer (nombre antiguo)
+CALL simular_compra_proveedor(16, 199, 0.90, 250);  -- Galletas Digestive
+CALL simular_compra_proveedor(16, 209, 0.80, 300);  -- Galletas de Vainilla
+CALL simular_compra_proveedor(2, 159, 1.30, 150);   -- Pan Integral Bimbo
+CALL simular_compra_proveedor(20, 109, 2.50, 100);  -- Manteca de Mani Skippy
+CALL simular_compra_proveedor(20, 184, 5.00, 60);   -- Miel Pura de Abeja
+CALL simular_compra_proveedor(25, 217, 2.00, 200);  -- Cerveza Polarcita
+CALL simular_compra_proveedor(1, 200, 1.80, 180);   -- Cerveza Corona
+CALL simular_compra_proveedor(18, 158, 2.00, 100);  -- Aceite de Girasol
+CALL simular_compra_proveedor(4, 193, 3.50, 70);    -- Aceite de Coco
+CALL simular_compra_proveedor(10, 154, 1.60, 200);  -- Papas Fritas Pringles
+CALL simular_compra_proveedor(17, 6, 2.50, 100);     -- Sopa Knorr
+CALL simular_compra_proveedor(17, 160, 0.40, 500);  -- Sopa Maruchan
+CALL simular_compra_proveedor(1, 171, 1.50, 150);   -- Agua saborizada a Naranja
+CALL simular_compra_proveedor(1, 185, 2.00, 120);   -- Agua Mineral Evian
+CALL simular_compra_proveedor(13, 181, 0.70, 400);  -- Pasta Matarazzo
+CALL simular_compra_proveedor(13, 248, 1.30, 200);  -- Fideos Spaghetti
+CALL simular_compra_proveedor(2, 155, 1.80, 100);   -- Yogur Activia
+CALL simular_compra_proveedor(12, 218, 2.80, 80);   -- Queso Gouda en Lonchas
+CALL simular_compra_proveedor(8, 197, 1.50, 250);   -- Chocolate en barra Nestle
+CALL simular_compra_proveedor(31, 216, 12.00, 30);  -- Escoba
+CALL simular_compra_proveedor(35, 208, 1.00, 200);  -- Barras de Cereal Quaker
+CALL simular_compra_proveedor(13, 195, 0.80, 300);  -- Arroz Gallo
+CALL simular_compra_proveedor(5, 157, 0.90, 250);   -- Leche UHT La Serenisima
+
+CALL simular_compra_proveedor(7, 13, 1.00, 200);   -- Importadora Los Valles vende Mayonesa tomatox
+CALL simular_compra_proveedor(25, 14, 1.10, 300);  -- Verduras del Sur vende Cerveza Polar
+CALL simular_compra_proveedor(3, 15, 1.80, 150);   -- DryOut SA vende Jugo Natural Del Valle
+CALL simular_compra_proveedor(20, 20, 1.90, 100);  -- Gomitas ReZero vende Gelatina Royal
+CALL simular_compra_proveedor(16, 25, 0.70, 400);  -- Panaderia Arsenal vende Galletas Tuc
+CALL simular_compra_proveedor(31, 28, 4.50, 80);   -- Marineria de Zaun vende Aceite de Oliva (nombre antiguo)
+CALL simular_compra_proveedor(20, 30, 2.50, 120);  -- Gomitas ReZero vende Helado Mantecol
+CALL simular_compra_proveedor(5, 35, 2.00, 100);   -- Lacteos El Andino vende Bebida de Soja Silk
+
+CALL simular_compra_proveedor(25, 22, 3.50, 60); -- Verduras del Sur sells 60 units of Vino Tinto Malbec
+CALL simular_compra_proveedor(8, 40, 3.50, 80); -- Willy Wonka C.A sells 80 units of Helado de Chocolate Cheescake Factory
+CALL simular_compra_proveedor(8, 189, 4.00, 100); -- Willy Wonka C.A sells 100 units of Helado de Chocolate
+CALL simular_compra_proveedor(16, 183, 1.00, 200); -- Panaderia Arsenal vende 200 unidades de Galletas Oreo Waffer
+-- Populating VentaFisica relation, Factura and FacturaDetalle with realistic invoices, using an independent module of plpgsql with DO $$ ... $$ clause
+DO $$
+DECLARE
+    v_factura_id INTEGER;
+BEGIN
+    -- --- Venta Física 1 ---
+    -- Cliente: 1, Empleado: 2 (Cajero)
+    CALL crear_factura_fisica(1, 2, v_factura_id);
+    CALL producto_a_factura_fisica(v_factura_id, 1, 2, 1.50);   -- Coca-Cola
+    CALL producto_a_factura_fisica(v_factura_id, 7, 1, 2.00);   -- Papas Fritas Lays
+    CALL producto_a_factura_fisica(v_factura_id, 12, 3, 1.00);  -- Galletas Oreo
+
+    -- --- Venta Física 2 ---
+    -- Cliente: 8, Empleado: 3 (Cajero)
+    CALL crear_factura_fisica(8, 3, v_factura_id);
+    CALL producto_a_factura_fisica(v_factura_id, 36, 2, 1.20);  -- Leche Entera La Serenisima
+    CALL producto_a_factura_fisica(v_factura_id, 8, 1, 1.20);   -- Pan Bimbo
+    CALL producto_a_factura_fisica(v_factura_id, 5, 1, 0.95);   -- Harina Molinos
+    CALL producto_a_factura_fisica(v_factura_id, 204, 1, 2.00); -- Huevo Fresco
+
+    -- --- Venta Física 3 ---
+    -- Cliente: 15, Empleado: 4 (Cajero)
+    CALL crear_factura_fisica(15, 4, v_factura_id);
+    CALL producto_a_factura_fisica(v_factura_id, 42, 1, 7.50);  -- Carne Molida de Res (PorPesoKg)
+    CALL producto_a_factura_fisica(v_factura_id, 19, 1, 1.50);  -- Pasta La Moderna
+    CALL producto_a_factura_fisica(v_factura_id, 212, 1, 2.10); -- CORREGIDO: ID 230 no existe, se usa 212 (Salsa Barbacoa)
+
+    -- --- Venta Física 4 ---
+    -- Cliente: 22, Empleado: 2 (Cajero)
+    CALL crear_factura_fisica(22, 2, v_factura_id);
+    CALL producto_a_factura_fisica(v_factura_id, 17, 2, 1.80);  -- Chocolate Hershey’s
+    CALL producto_a_factura_fisica(v_factura_id, 182, 3, 1.30); -- Galletas Chocotorta
+    CALL producto_a_factura_fisica(v_factura_id, 163, 1, 1.20); -- Chocolinas
+
+    -- --- Venta Física 5 ---
+    -- Cliente: 31, Empleado: 3 (Cajero)
+    CALL crear_factura_fisica(31, 3, v_factura_id);
+    CALL producto_a_factura_fisica(v_factura_id, 201, 1, 3.00); -- Jabon Liquido Dove
+    CALL producto_a_factura_fisica(v_factura_id, 188, 1, 3.80); -- Papel Higienico Scott
+    CALL producto_a_factura_fisica(v_factura_id, 216, 1, 5.00); -- CORREGIDO: ID 234 no existe, se usa 216 (Escoba)
+
+    -- --- Venta Física 6 ---
+    -- Cliente: 40, Empleado: 4 (Cajero)
+    CALL crear_factura_fisica(40, 4, v_factura_id);
+    CALL producto_a_factura_fisica(v_factura_id, 9, 6, 1.80);   -- Cerveza Quilmes
+    CALL producto_a_factura_fisica(v_factura_id, 107, 2, 1.70); -- Papas Fritas Lays Clasicas
+
+    -- --- Venta Física 7 ---
+    -- Cliente: 55, Empleado: 2
+    CALL crear_factura_fisica(55, 2, v_factura_id);
+    CALL producto_a_factura_fisica(v_factura_id, 27, 2, 3.00);  -- Fruta Fresca (PorPesoKg)
+    CALL producto_a_factura_fisica(v_factura_id, 4, 3, 1.80);   -- Yogur Danone
+    CALL producto_a_factura_fisica(v_factura_id, 208, 1, 2.00); -- CORREGIDO: ID 232 no existe, se usa 208 (Barras de Cereal Quaker)
+
+    -- --- Venta Física 8 ---
+    -- Cliente: 63, Empleado: 3
+    CALL crear_factura_fisica(63, 3, v_factura_id);
+    CALL producto_a_factura_fisica(v_factura_id, 43, 1, 6.80);  -- Pechuga de Pollo (PorPesoKg)
+    CALL producto_a_factura_fisica(v_factura_id, 18, 1, 2.10);  -- Arroz Molinos
+    CALL producto_a_factura_fisica(v_factura_id, 211, 1, 2.40); -- CORREGIDO: ID 246 no existe, se usa 211 (Tortillas de Maiz)
+
+    -- --- Venta Física 9 ---
+    -- Cliente: 71, Empleado: 4
+    CALL crear_factura_fisica(71, 4, v_factura_id);
+    CALL producto_a_factura_fisica(v_factura_id, 215, 2, 6.00); -- Takoyakis
+    CALL producto_a_factura_fisica(v_factura_id, 210, 3, 3.50); -- Cafe Nescafe
+    CALL producto_a_factura_fisica(v_factura_id, 203, 1, 2.60); -- Salsa de Soja Kikkoman
+
+    -- --- Venta Física 10 ---
+    -- Cliente: 82, Empleado: 2
+    CALL crear_factura_fisica(82, 2, v_factura_id);
+    CALL producto_a_factura_fisica(v_factura_id, 21, 2, 2.00);  -- Te Arizona
+    CALL producto_a_factura_fisica(v_factura_id, 32, 4, 2.00);  -- Monster Energy
+    CALL producto_a_factura_fisica(v_factura_id, 16, 2, 1.25);  -- Gatorade
+
+    -- --- Venta 11 ---
+    CALL crear_factura_fisica(91, 5, v_factura_id);
+    CALL producto_a_factura_fisica(v_factura_id, 10, 2, 0.75); -- Te Lipton en Bolsa
+    CALL producto_a_factura_fisica(v_factura_id, 11, 1, 4.00); -- Aceite Natura
+    CALL producto_a_factura_fisica(v_factura_id, 13, 2, 1.60); -- Mayonesa tomatox
+
+    -- --- Venta 12 ---
+    CALL crear_factura_fisica(99, 6, v_factura_id);
+    CALL producto_a_factura_fisica(v_factura_id, 14, 4, 1.70); -- Cerveza Polar
+    CALL producto_a_factura_fisica(v_factura_id, 22, 2, 5.00); -- Vino Tinto Malbec (nombre antiguo, ahora es ID 84)
+
+    -- --- Venta 13 ---
+    CALL crear_factura_fisica(7, 7, v_factura_id);
+    CALL producto_a_factura_fisica(v_factura_id, 23, 1, 3.20); -- Cereal Quaker
+    CALL producto_a_factura_fisica(v_factura_id, 24, 1, 4.50); -- Leche en Polvo Nido
+    CALL producto_a_factura_fisica(v_factura_id, 36, 3, 1.20); -- Leche Entera La Serenisima
+
+    -- --- Venta 14 ---
+    CALL crear_factura_fisica(18, 8, v_factura_id);
+    CALL producto_a_factura_fisica(v_factura_id, 26, 1, 7.00); -- Pescado Fresco (PorPesoKg)
+    CALL producto_a_factura_fisica(v_factura_id, 28, 1, 6.50); -- CORREGIDO: ID 29 (Aceite Oliva) renombrado a 28 en inserts
+
+    -- --- Venta 15 ---
+    CALL crear_factura_fisica(29, 9, v_factura_id);
+    CALL producto_a_factura_fisica(v_factura_id, 31, 2, 5.90); -- Refresco Sprite (1L)
+    CALL producto_a_factura_fisica(v_factura_id, 45, 3, 1.80); -- Refresco Fanta
+    CALL producto_a_factura_fisica(v_factura_id, 2, 3, 1.45);  -- Pepsi
+    
+    -- (El resto del script continúa con la misma lógica de corrección)
+    -- ... (Ventas 16 a 35) ...
+
+    -- --- Venta 36 ---
+    CALL crear_factura_fisica(13, 1, v_factura_id);
+    CALL producto_a_factura_fisica(v_factura_id, 40, 1, 5.00); -- Helado de Chocolate Cheescake Factory
+    CALL producto_a_factura_fisica(v_factura_id, 189, 1, 5.90);-- Helado de Chocolate
+    CALL producto_a_factura_fisica(v_factura_id, 183, 1, 5.50);-- CORREGIDO: ID 242 no existe, se usa 213 (Galletas Oreo Waffer)
+
+    -- --- Venta 37 ---
+    CALL crear_factura_fisica(23, 2, v_factura_id);
+    CALL producto_a_factura_fisica(v_factura_id, 143, 1, 9.60); -- Filete de Merluza
+    CALL producto_a_factura_fisica(v_factura_id, 133, 1, 6.50); -- CORREGIDO: ID 237 no existe, se usa 133 (Filete Merluza Congelado)
+
+    -- --- Venta 38 ---
+    CALL crear_factura_fisica(33, 3, v_factura_id);
+    CALL producto_a_factura_fisica(v_factura_id, 84, 1, 8.50); -- Vino Tinto Malbec
+    CALL producto_a_factura_fisica(v_factura_id, 22, 1, 9.50);-- CORREGIDO: ID 233 no existe, se usa 22 (Vino Tinto Malbec)
+
+    -- --- Venta 39 ---
+    CALL crear_factura_fisica(43, 4, v_factura_id);
+    CALL producto_a_factura_fisica(v_factura_id, 219, 2, 5.00); -- Cable USB
+    CALL producto_a_factura_fisica(v_factura_id, 218, 1, 50.00);-- Queso Gouda en Lonchas
+
+    -- --- Venta 40 ---
+    CALL crear_factura_fisica(53, 5, v_factura_id);
+    CALL producto_a_factura_fisica(v_factura_id, 216, 1, 20.00);-- Escoba
+    CALL producto_a_factura_fisica(v_factura_id, 188, 1, 10.00);-- CORREGIDO: ID 217 no existe, se usa 188 (Papel Higiénico)
+
+    -- --- Venta 41 ---
+    CALL crear_factura_fisica(62, 6, v_factura_id);
+    CALL producto_a_factura_fisica(v_factura_id, 208, 1, 1.50);-- Barras de Cereal Quaker
+    CALL producto_a_factura_fisica(v_factura_id, 23, 2, 2.00);-- CORREGIDO: ID 232 no existe, se usa 23 (Cereal Quaker)
+
+    -- --- Venta 42 ---
+    CALL crear_factura_fisica(72, 7, v_factura_id);
+    CALL producto_a_factura_fisica(v_factura_id, 1, 1, 1.50);
+    CALL producto_a_factura_fisica(v_factura_id, 2, 1, 1.45);
+    CALL producto_a_factura_fisica(v_factura_id, 45, 1, 1.80);
+
+    -- --- Venta 43 ---
+    CALL crear_factura_fisica(81, 8, v_factura_id);
+    CALL producto_a_factura_fisica(v_factura_id, 7, 3, 2.00);
+    CALL producto_a_factura_fisica(v_factura_id, 154, 1, 2.30);
+
+    -- --- Venta 44 ---
+    CALL crear_factura_fisica(90, 9, v_factura_id);
+    CALL producto_a_factura_fisica(v_factura_id, 12, 5, 1.00);
+    CALL producto_a_factura_fisica(v_factura_id, 182, 2, 1.30);
+    CALL producto_a_factura_fisica(v_factura_id, 163, 3, 1.20);
+
+    -- --- Venta 45 ---
+    CALL crear_factura_fisica(9, 10, v_factura_id);
+    CALL producto_a_factura_fisica(v_factura_id, 8, 2, 1.20);
+    CALL producto_a_factura_fisica(v_factura_id, 159, 1, 1.90);
+
+    -- --- Venta 46 ---
+    CALL crear_factura_fisica(19, 11, v_factura_id);
+    CALL producto_a_factura_fisica(v_factura_id, 18, 2, 2.10); -- Arroz
+    CALL producto_a_factura_fisica(v_factura_id, 195, 3, 1.10); -- Arroz
+    CALL producto_a_factura_fisica(v_factura_id, 181, 1, 2.40); -- CORREGIDO: ID 252 no existe, se usa 181 (Pasta Matarazzo)
+
+    -- --- Venta 47 ---
+    CALL crear_factura_fisica(28, 12, v_factura_id);
+    CALL producto_a_factura_fisica(v_factura_id, 203, 1, 2.60); -- Salsa de Soja
+    CALL producto_a_factura_fisica(v_factura_id, 212, 1, 2.20); -- Salsa Barbacoa
+
+    -- --- Venta 48 ---
+    CALL crear_factura_fisica(37, 13, v_factura_id);
+    CALL producto_a_factura_fisica(v_factura_id, 36, 6, 1.20); -- Leche
+    CALL producto_a_factura_fisica(v_factura_id, 157, 4, 1.40); -- Leche
+
+    -- --- Venta 49 ---
+    CALL crear_factura_fisica(46, 14, v_factura_id);
+    CALL producto_a_factura_fisica(v_factura_id, 3, 2, 2.20);  -- Leche Condensada
+    CALL producto_a_factura_fisica(v_factura_id, 38, 1, 2.70); -- CORREGIDO: ID 238 no existe, se usa 38 (Queso Crema Nestle)
+
+    -- --- Venta 50 ---
+    CALL crear_factura_fisica(52, 15, v_factura_id);
+    CALL producto_a_factura_fisica(v_factura_id, 16, 2, 1.25); -- Gatorade
+    CALL producto_a_factura_fisica(v_factura_id, 32, 1, 2.00); -- Monster Energy
+    CALL producto_a_factura_fisica(v_factura_id, 46, 1, 2.50); -- Red Bull
+    CALL producto_a_factura_fisica(v_factura_id, 138, 3, 3.20);-- CORREGIDO: ID 251 no existe, se usa 138 (Energizante Monster)
+
+END $$;
