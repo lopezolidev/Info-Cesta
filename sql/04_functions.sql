@@ -25,7 +25,7 @@ CREATE OR REPLACE FUNCTION calculo_subtotal_factura(factura_id INTEGER)
 RETURNS DECIMAL
 AS $$
     SELECT 
-        SUM(cantidad * precioPor)
+        COALESCE(SUM(cantidad * precioPor), 0.00)
     FROM 
         FacturaDetalle
     WHERE 

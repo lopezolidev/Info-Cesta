@@ -31,6 +31,10 @@ CREATE TABLE IF NOT EXISTS TipoEnvio (
      PRIMARY KEY (id)  
 ) ;
 
+-- important alteration → TipoEnvio must accept tiempoEstimadoEntrega beyond 23 hours for next week and standard 3 days delivery
+ALTER TABLE TipoEnvio
+DROP CONSTRAINT tipoenvio_tiempoestimadoentrega_check ;
+
 CREATE TABLE IF NOT EXISTS Marca (
     id INTEGER GENERATED ALWAYS AS IDENTITY ,
     nombre VARCHAR(100) NOT NULL ,

@@ -108,6 +108,39 @@ CALL simular_compra_proveedor(25, 22, 3.50, 60); -- Verduras del Sur sells 60 un
 CALL simular_compra_proveedor(8, 40, 3.50, 80); -- Willy Wonka C.A sells 80 units of Helado de Chocolate Cheescake Factory
 CALL simular_compra_proveedor(8, 189, 4.00, 100); -- Willy Wonka C.A sells 100 units of Helado de Chocolate
 CALL simular_compra_proveedor(16, 183, 1.00, 200); -- Panaderia Arsenal vende 200 unidades de Galletas Oreo Waffer
+CALL simular_compra_proveedor(39, 219, 3.00, 50); -- SAO Express vende 50 unidades de Cable USB
+CALL simular_compra_proveedor(5, 38, 1.90, 100); -- Lacteos El Andino vende 100 unidades de Queso Crema Nestle
+CALL simular_compra_proveedor(5, 50, 2.00, 100); -- Lacteos El Andino sells 100 units of Queso Crema Philadelphia
+CALL simular_compra_proveedor(8, 60, 0.90, 200); -- Willy Wonka C.A vende 200 unidades de Galletas Chocotorta
+CALL simular_compra_proveedor(8, 60, 0.90, 200); -- Willy Wonka C.A sells 200 units of Galletas Chocotorta
+CALL simular_compra_proveedor(10, 88, 2.00, 150); -- 記憶 Salud vende 150 unidades de Jabon Liquido Dove
+CALL simular_compra_proveedor(23, 145, 3.20, 100); -- Distribuidora Yuki vende 100 unidades de Salsa de Soja Kikkoman
+CALL simular_compra_proveedor(18, 66, 2.20, 150); -- Carne ZZZ C.A vende 150 unidades de Aceite de Girasol
+CALL simular_compra_proveedor(7, 99, 1.80, 200);  -- Importadora Los Valles vende 200 unidades de Salsa Barbacoa tomatox
+CALL simular_compra_proveedor(18, 41, 4.80, 70);   -- Carne ZZZ C.A vende 70 unidades de Chuletas de Cerdo
+CALL simular_compra_proveedor(27, 71, 0.80, 300);  -- Galletas Del Alba vende 300 unidades de Chocolinas
+CALL simular_compra_proveedor(25, 101, 6.00, 50);  -- Verduras del Sur vende 50 unidades de Vino Tinto Malbec
+CALL simular_compra_proveedor(15, 131, 1.20, 200); -- Lacteos Von-Tinson C.A vende 200 unidades de Azucar Blanca
+CALL simular_compra_proveedor(30, 49, 1.20, 150);  -- Dental Healthy vende 150 unidades de Manteca de Cerdo (Proveedor genérico)
+CALL simular_compra_proveedor(13, 79, 1.10, 200);  -- Los Llanos del Norte vende 200 unidades de Pasta Penne Rigate
+CALL simular_compra_proveedor(2, 119, 1.40, 180);  -- Alimentos del Norte vende 180 unidades de Cereal de Avena Quaker
+CALL simular_compra_proveedor(40, 150, 1.25, 200) ;
+CALL simular_compra_proveedor(11, 180, 0.78, 190) ;
+CALL simular_compra_proveedor(19, 202, 1.30, 220) ;
+ 
+CALL simular_compra_proveedor(21, 12, 0.40, 300) ;
+CALL simular_compra_proveedor(12, 42, 0.98, 170) ;
+CALL simular_compra_proveedor(34, 72, 0.87, 150) ;
+CALL simular_compra_proveedor(28, 102, 0.21, 180) ;
+
+/*
+
+SELECT *
+FROM Inventario
+WHERE productoId = 150 OR productoId = 180 OR productoId = 202 ;
+
+*/
+-- Paso 2 : Simular compras físicas poblando Factura, FacturaDetalle, VentaFisica e HistorialClienteProducto
 -- Populating VentaFisica relation, Factura and FacturaDetalle with realistic invoices, using an independent module of plpgsql with DO $$ ... $$ clause
 DO $$
 DECLARE
@@ -210,9 +243,6 @@ BEGIN
     CALL producto_a_factura_fisica(v_factura_id, 31, 2, 5.90); -- Refresco Sprite (1L)
     CALL producto_a_factura_fisica(v_factura_id, 45, 3, 1.80); -- Refresco Fanta
     CALL producto_a_factura_fisica(v_factura_id, 2, 3, 1.45);  -- Pepsi
-    
-    -- (El resto del script continúa con la misma lógica de corrección)
-    -- ... (Ventas 16 a 35) ...
 
     -- --- Venta 36 ---
     CALL crear_factura_fisica(13, 1, v_factura_id);
@@ -296,3 +326,37 @@ BEGIN
     CALL producto_a_factura_fisica(v_factura_id, 138, 3, 3.20);-- CORREGIDO: ID 251 no existe, se usa 138 (Energizante Monster)
 
 END $$;
+
+-- #####################################################################################################################################
+-- ## PASO 3: SIMULACIÓN DE VENTAS ONLINE ##
+-- #####################################################################################################################################
+-- Se procesa el carrito de cada uno de los 25 clientes que tienen productos.
+
+CALL simular_compra_online(1, 2, 1);   -- Cliente 1, Envío "Mismo día", Pago con "Tarjeta de crédito"
+CALL simular_compra_online(5, 3, 3);   -- Cliente 5, Envío "Al día siguiente", Pago con "PayPal"
+CALL simular_compra_online(10, 5, 8);  -- Cliente 10, Envío "Estandar", Pago con "Pago movil"
+CALL simular_compra_online(15, 4, 10); -- Cliente 15, Envío "Semana siguiente", Pago con "Zelle"
+CALL simular_compra_online(20, 1, 1);   -- Cliente 20, Envío "Inmediato", Pago con "Tarjeta de crédito"
+CALL simular_compra_online(25, 2, 2);   -- Cliente 25, Envío "Mismo día", Pago con "Tarjeta de débito"
+CALL simular_compra_online(30, 3, 3);   -- Cliente 30, Envío "Al día siguiente", Pago con "PayPal"
+CALL simular_compra_online(35, 5, 4);   -- Cliente 35, Envío "Estandar", Pago con "Transferencia bancaria"
+CALL simular_compra_online(40, 2, 9);   -- Cliente 40, Envío "Mismo día", Pago con "Cashea"
+CALL simular_compra_online(45, 1, 1);   -- Cliente 45, Envío "Inmediato", Pago con "Tarjeta de crédito"
+CALL simular_compra_online(50, 3, 10);  -- Cliente 50, Envío "Al día siguiente", Pago con "Zelle"
+CALL simular_compra_online(55, 5, 8);   -- Cliente 55, Envío "Estandar", Pago con "Pago movil"
+
+-- to-do: this point forward
+CALL simular_compra_online(60, 2, 1);   -- Cliente 60, Envío "Mismo día", Pago con "Tarjeta de crédito"
+
+CALL simular_compra_online(62, 4, 3);   -- Cliente 62, Envío "Semana siguiente", Pago con "PayPal"
+CALL simular_compra_online(65, 3, 2);   -- Cliente 65, Envío "Al día siguiente", Pago con "Tarjeta de débito"
+CALL simular_compra_online(70, 1, 1);   -- Cliente 70, Envío "Inmediato", Pago con "Tarjeta de crédito"
+CALL simular_compra_online(73, 5, 8);   -- Cliente 73, Envío "Estandar", Pago con "Pago movil"
+CALL simular_compra_online(75, 2, 9);   -- Cliente 75, Envío "Mismo día", Pago con "Cashea"
+CALL simular_compra_online(80, 3, 10);  -- Cliente 80, Envío "Al día siguiente", Pago con "Zelle"
+CALL simular_compra_online(83, 1, 4);   -- Cliente 83, Envío "Inmediato", Pago con "Transferencia bancaria"
+CALL simular_compra_online(85, 5, 1);   -- Cliente 85, Envío "Estandar", Pago con "Tarjeta de crédito"
+CALL simular_compra_online(90, 2, 3);   -- Cliente 90, Envío "Mismo día", Pago con "PayPal"
+CALL simular_compra_online(95, 3, 1);   -- Cliente 95, Envío "Al día siguiente", Pago con "Tarjeta de crédito"
+CALL simular_compra_online(100, 1, 10); -- Cliente 100, Envío "Inmediato", Pago con "Zelle"
+CALL simular_compra_online(48, 5, 2);   -- Cliente 48, Envío "Estandar", Pago con "Tarjeta de débito"
