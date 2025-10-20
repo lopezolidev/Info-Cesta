@@ -132,14 +132,50 @@ CALL simular_compra_proveedor(21, 12, 0.40, 300) ;
 CALL simular_compra_proveedor(12, 42, 0.98, 170) ;
 CALL simular_compra_proveedor(34, 72, 0.87, 150) ;
 CALL simular_compra_proveedor(28, 102, 0.21, 180) ;
+CALL simular_compra_proveedor(31, 56, 1.40, 300) ;
+CALL simular_compra_proveedor(19, 86, 1.98, 200) ;
+CALL simular_compra_proveedor(6, 116, 2.16, 150) ;
+CALL simular_compra_proveedor(2, 146, 1.21, 310) ;
+CALL simular_compra_proveedor(27, 18, 1.40, 370) ;
+CALL simular_compra_proveedor(17, 48, 1.98, 260) ;
+CALL simular_compra_proveedor(3, 78, 2.16, 180) ;
+CALL simular_compra_proveedor(25, 28, 1.50, 320) ;
+CALL simular_compra_proveedor(16, 58, 1.80, 200) ;
+CALL simular_compra_proveedor(1, 88, 2.40, 140) ;
+CALL simular_compra_proveedor(8, 118, 1.46, 340) ; 
+CALL simular_compra_proveedor(7, 148, 1.91, 300) ;         
+CALL simular_compra_proveedor(22, 55, 1.90, 300) ;
+CALL simular_compra_proveedor(16, 89, 1.20, 250) ;
+CALL simular_compra_proveedor(36, 112, 2.45, 180) ;
+CALL simular_compra_proveedor(23, 5, 0.90, 370) ;
+CALL simular_compra_proveedor(13, 35, 2.20, 250) ;
+CALL simular_compra_proveedor(37, 65, 0.45, 120) ;
+CALL simular_compra_proveedor(28, 95, 0.46, 300) ;
+CALL simular_compra_proveedor(26, 77, 0.90, 300) ;
+CALL simular_compra_proveedor(2, 91, 2.20, 258) ;
+CALL simular_compra_proveedor(39, 105, 0.45, 220) ;
+CALL simular_compra_proveedor(40, 123, 0.46, 200) ;
+CALL simular_compra_proveedor(22, 21, 1.90, 350) ;
+CALL simular_compra_proveedor(12, 51, 2.25, 270) ;
+CALL simular_compra_proveedor(32, 81, 1.45, 210) ;
+CALL simular_compra_proveedor(40, 111, 3.46, 280) ; 
+CALL simular_compra_proveedor(17, 141, 1.96, 320) ;  
+CALL simular_compra_proveedor(23, 171, 1.20, 340) ;         
+CALL simular_compra_proveedor(24, 213, 1.50, 300) ;
+CALL simular_compra_proveedor(19, 216, 2.29, 220) ;
+CALL simular_compra_proveedor(35, 212, 1.05, 180) ;
+CALL simular_compra_proveedor(37, 208, 3.06, 170) ; 
+CALL simular_compra_proveedor(26, 200, 1.50, 330) ;
+CALL simular_compra_proveedor(11, 184, 2.29, 250) ;
+CALL simular_compra_proveedor(8, 154, 1.05, 150) ;
+CALL simular_compra_proveedor(9, 124, 3.06, 190) ; 
+CALL simular_compra_proveedor(35, 94, 1.96, 300) ;
+CALL simular_compra_proveedor(21, 13, 1.80, 300) ;
+CALL simular_compra_proveedor(10, 43, 0.29, 250) ;
+CALL simular_compra_proveedor(20, 73, 1.50, 100) ;
+CALL simular_compra_proveedor(30, 103, 2.97, 120) ; 
+CALL simular_compra_proveedor(33, 133, 1.07, 380) ;
 
-/*
-
-SELECT *
-FROM Inventario
-WHERE productoId = 150 OR productoId = 180 OR productoId = 202 ;
-
-*/
 -- Paso 2 : Simular compras físicas poblando Factura, FacturaDetalle, VentaFisica e HistorialClienteProducto
 -- Populating VentaFisica relation, Factura and FacturaDetalle with realistic invoices, using an independent module of plpgsql with DO $$ ... $$ clause
 DO $$
@@ -344,10 +380,7 @@ CALL simular_compra_online(40, 2, 9);   -- Cliente 40, Envío "Mismo día", Pago
 CALL simular_compra_online(45, 1, 1);   -- Cliente 45, Envío "Inmediato", Pago con "Tarjeta de crédito"
 CALL simular_compra_online(50, 3, 10);  -- Cliente 50, Envío "Al día siguiente", Pago con "Zelle"
 CALL simular_compra_online(55, 5, 8);   -- Cliente 55, Envío "Estandar", Pago con "Pago movil"
-
--- to-do: this point forward
 CALL simular_compra_online(60, 2, 1);   -- Cliente 60, Envío "Mismo día", Pago con "Tarjeta de crédito"
-
 CALL simular_compra_online(62, 4, 3);   -- Cliente 62, Envío "Semana siguiente", Pago con "PayPal"
 CALL simular_compra_online(65, 3, 2);   -- Cliente 65, Envío "Al día siguiente", Pago con "Tarjeta de débito"
 CALL simular_compra_online(70, 1, 1);   -- Cliente 70, Envío "Inmediato", Pago con "Tarjeta de crédito"
